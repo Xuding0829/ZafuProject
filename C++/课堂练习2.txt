@@ -1,0 +1,1502 @@
+//继承性三步：吸收，改造，添加
+#include <iostream>
+using namespace std;
+
+class a
+{
+public:
+	int x;
+	void show()
+	{
+		cout<<"aaaaaaaaaaaa"<<endl;
+	}
+};
+
+class b: public a
+{
+public:
+	int y;
+	void show()
+	{
+		cout<<"bbbbbbbbbbbbb"<<endl;
+	}
+};
+void main ()
+{
+	b bb;
+	bb.x = 1;
+	bb.y = 2;
+
+	bb.show();
+	cout<<sizeof(bb)<<endl;
+	cout<<*((int*)&bb+0);
+}
+
+
+//共有继承
+#include <iostream>
+using namespace std;
+
+class A
+{
+public:
+	int x;
+protected:
+	int y;
+private:
+	int z;
+};
+
+class B: public A
+{
+public:
+	void show()
+	{
+		cout<<x<<endl;
+		cout<<y<<endl;
+		cout<<z<<endl;
+	}
+};
+
+void main ()
+{
+	B b;
+	b.x = 3;
+	b.y = 3;
+	b.z = 3;
+}
+
+
+//私有继承
+#include <iostream>
+using namespace std;
+
+class A
+{
+public:
+	int x;
+protected:
+	int y;
+private:
+	int z;
+};
+
+class B: private A
+{
+public:
+	void show()
+	{
+		cout<<x<<endl;
+	}
+};
+
+void main ()
+{
+	B b;
+	b.x = 3;
+}
+
+
+//保护继承
+#include <iostream>
+using namespace std;
+
+class A
+{
+public:
+	int x;
+protected:
+	int y;
+private:
+	int z;
+};
+
+class B: protected A
+{
+public:
+	void show()
+	{
+		cout<<y<<endl;
+	}
+};
+
+class C: protected B
+{
+public:
+	void show()
+	{
+		cout<<y<<endl;
+	}
+};
+
+void main ()
+{
+
+}
+
+
+//类型兼容规则
+#include <iostream>
+using namespace std;
+
+class A
+{
+public:
+	int x;
+};
+
+class B: public A
+{
+public:
+	int y;
+};
+
+void main ()
+{
+	B b;
+	b.x = 2;
+	b.y = 3;
+
+	//A a = b;
+	//A &a = b;
+	A *p = &b;
+	cout<<p->y;
+}
+
+1 分析以下程序的执行结果
+#include<iostream.h> 
+class base 
+{ 
+	int n; 
+public: 
+	base(int a) 
+	{ 
+		cout<<"constructing base class"<<endl; 
+		n=a; 
+		cout<<"n="<<n<<endl; 
+	} 
+	~base()
+	{cout<<"destructing base class"<<endl;} 
+}; 
+class subs:public base 
+{ 
+	base bobj; 
+	int m; 
+public: 
+	subs(int a,int b,int c):bobj(c),base(a)
+	{ 
+		cout<<"constructing sub cass"<<endl; 
+		m=b; 
+		cout<<"m="<<m<<endl; 
+	} 
+	~subs()
+	{cout<<"destructing sub class"<<endl;} 
+}; 
+void main() 
+{ 
+	subs s(1,2,3); 
+} 
+
+2 设计一个圆类circle和一个桌子类table，另设计一个圆桌类roundtable，它是从前两个类派生的，要求输出一个圆桌的高度、桌面面积和颜色等数据。
+分析：circle类包含私有数据成员radius和求圆面积的成员函数getarea()；table类包含私有数据成员height和返回高度的成员函数getheight()。roundtable类继承所有上述类的数据成员和成员函数，添加了私有数据成员color和相应的成员函数。
+
+3 图书馆的图书包含书名、编号、作者属性，读者包含姓名和借书证属性，每位读者最多可借5本书，编写程序输出某读者的借书情况。 
+分析：设计一个类object，从它派生出书类book和读者类reader，在reader类中有一个rentbook()成员函数用于借阅图书。
+
+4 分析以下程序的执行结果 
+#include<iostream.h> 
+class A 
+{ 
+public: 
+	int n; 
+}; 
+class B:virtual public A{}; //对比不加virtual的情况
+class C:virtual public A{}; //对比不加virtual的情况
+class D:public B,public C 
+{ 
+	int getn(){return B::n;} 
+}; 
+void main() 
+{ 
+	D d; 
+	d.B::n=10; 
+	d.C::n=20; 
+	cout<<d.B::n<<","<<d.C::n<<endl; 
+} 
+
+5 设计一个虚基类base，包含姓名和年龄私有数据成员以及相关的成员函数，由它派生出领导类leader，包含职务和部门私有数据成员以及相关的成员函数。再由base派生出工程师类engineer，包含职称和专业私有数据成员以及相关的成员函数。然后由leader和engineer类派生出主任工程师类chairman。采用一些数据进行测试。
+分析：由于chairman类从leader类和engineer类派生，而leader类和engineer类都是从base类派生的，所以为了使base只存一个副本，必须采用虚拟派生的方法。 
+
+//7_8.cpp
+#include <iostream>
+using namespace std;
+class B0	//声明基类B0
+{
+public:	//外部接口
+	int nV;
+	void fun(){cout<<"Member of B0"<<endl;}
+};
+class B1: virtual public B0	//B0为虚基类，派生B1类
+{
+public:	//新增外部接口
+	int nV1;
+};
+class B2: virtual public B0	//B0为虚基类派生B2类
+{
+public:	//新增外部接口
+	int nV2;
+};
+class D1: public B1, public B2	//派生类D1声明
+{
+public:	//新增外部接口
+	int nVd;
+	void fund(){cout<<"Member of D1"<<endl;}
+};
+void main()	//程序主函数
+{
+	D1 d1;	//声明D1类对象d1
+	d1.nV = 1;	//使用直接基类
+	d1.nV1 = 2;
+	d1.nV2 = 3;
+	d1.nVd = 4;
+	cout<<sizeof(d1)<<endl;
+	cout<<*((int*)&d1+0)<<endl;
+	cout<<*((int*)&d1+1)<<endl;
+	cout<<*((int*)&d1+2)<<endl;
+	cout<<*((int*)&d1+3)<<endl;
+	cout<<*((int*)&d1+4)<<endl;
+	cout<<*((int*)&d1+5)<<endl;
+}
+
+===============================================================================
+
+6 分析以下程序的执行结果
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+public: 
+	Sample(){} 
+	Sample(int i){n=i;} 
+	Sample &operator =(Sample); 
+	void disp(){cout<<"n="<<n<<endl;} 
+}; 
+Sample &Sample::operator=(Sample s) 
+{ 
+	Sample::n=s.n; 
+	return *this; 
+} 
+void main() 
+{ 
+	Sample s1(10),s2; 
+	s2=s1; 
+	s2.disp(); 
+} 
+
+7 分析以下程序的执行结果
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+public: 
+	Sample(int i){n=i;} 
+	operator++(){n++;}	  
+	operator++(int){n+=2;} 
+	void disp() 
+	{ 
+		cout<<"n="<<n<<endl; 
+	} 
+}; 
+void main() 
+{ 
+	Sample A(2),B(2); 
+	A++; 
+	++B; 
+	A.disp(); 
+	B.disp(); 
+} 
+
+8 分析以下程序的执行结果
+#include<iostream.h> 
+class Sample 
+{ 
+	int A[10][10]; 
+public: 
+	int &operator()(int,int); 
+}; 
+int &Sample::operator()(int x,int y) 
+{ 
+	return A[x][y]; 
+} 
+void main() 
+{ 
+	Sample a; 
+	int i,j; 
+	for(i=0;i<10;i++) 
+		for(j=0;j<10;j++) 
+			a(i,j)=i+j; 
+	for(i=0;i<10;i++) 
+		cout<<a(i,1)<<" "; 
+	cout<<endl; 
+} 
+
+9
+设计一个点类Point，实现点对象之间的各种运算。 
+解： 
+Point类提供了7个运算符重载函数(参考声明，写函数体)，以实现相应的运算。
+
+10 分析以下程序的执行结果
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+public: 
+	Sample(){} 
+	Sample(int i){n=i;} 
+	friend Sample operator-(Sample &,Sample &); 
+	friend Sample operator+(Sample &,Sample &); 
+	void disp(){cout<<"n="<<n<<endl;} 
+}; 
+Sample operator-(Sample &s1,Sample &s2) 
+{ 
+	int m=s1.n-s2.n; 
+	return Sample(m); 
+} 
+Sample operator+(Sample &s1,Sample &s2) 
+{ 
+	int m=s1.n+s2.n; 
+	return Sample(m); 
+} 
+void main() 
+{ 
+	Sample s1(10),s2(20),s3; 
+	s3=s2-s1; 
+	s3.disp(); 
+	s3=s2+s1; 
+	s3.disp(); 
+} 
+
+11
+设计一个三角形类Triangle，包含三角形三条边长的私有数据成员，另有一个重载运算符“+”，以实现求两个三角形对象的面积之和。 
+解： 
+在Triangle类中设计一个友元函数operator+(Triangle t1,Triangle t2)，它重载运算符"+"，返回t1和t2两个三角形的面积之和。
+
+12
+题11的重载运算符“+”友元函数只能返回两个三角形的面积之和，不能计算三个三角形的面积之和，改进一下，使之能计算任意多个三角形的面积之和。 
+解： 
+题11的重载运算符为什么不能计算3个三角形的面积之和呢？对于式子:s=t1+t2+t3，先计算t1+t2，返回一个double数然后再进行该double数+t3的计算，显然没有这样的重载运算符“+”友元函数，只需要再添加一个友元函数friend double operator+(double d,Triangle t) 即可。 
+
+13
+封装一个整型数组类，内有成员变量int a[N]，实现运算符[]的重载，使得该类用起来更像一个真正的数组。
+
+14
+请重载<<运算符，使下列语句能够运行：
+cout<<d;//d是Data类的对象
+
+class Data
+{ 
+	int a,b;  
+	char *c;
+public:
+	Data(int x, int y, char z[]);
+	~Data();	
+};
+
+15 
+手工实现String的常用运算符重载
+
+16
+请编写person类的智能指针，并在智能指针中重写show()；实现person类的堆内存释放。
+
+class person
+{
+public:
+	person(char* s);
+	void show();
+	char* getname();
+private:
+	char* name;
+};
+
+
+==================================================
+
+17
+有一个交通工具类vehicle，将它作为基类派生出小车类car和轮船类boat，请定义这些类并通过虚函数来显示各类的信息。
+
+18
+现有三角形、正方形和圆形三种图形，求它们的各自面积。请抽象出一个基类，在基类中声明一个虚函数，用来求面积，然后派生出3个子类，在子类中分别重写这个求面积函数。
+
+19
+求正方体、圆的表面积和体积。请抽象一个公共的基类container为抽象类，在其中定义求表面积和体积的纯虚函数（注意：此基类本身是没有表面积和体积可言的。）抽象类中定义一个公共的成员变量radius，可作为正方体的边长、圆的半径。再由此派生出要描述的2个类，在这2个类中重写求表面积和体积的方法。
+
+
+
+
+
+
+
+
+
+
+========================================================================================================================
+参考：
+
+1
+本题说明派生类中含有对象成员情况下构造函数和析构函数的调用顺序。这里base为基类,subs为派生类，subs类的构造函数中含有对象成员。 
+所以输出为： 
+constrcuting base class 
+n=1 
+constructing base class 
+n=3 
+constructing sub class 
+m=2 
+destructing sub class 
+destructing base class 
+destructing base class 
+注意：当派生类中含有对象成员时，构造函数的调用顺序如下： 
+1)基类的构造函数 
+2)对象成员的构造函数 
+3)派生类的构造函数 
+析构函数的调用顺序与之相反 
+
+========================================================================================================================
+2
+#include<iostream.h> 
+#include<string.h> 
+class circle 
+{ 
+	double radius; 
+public: 
+	circle(double r) { radius=r; } 
+	double getarea() { return radius*radius*3.14; } 
+}; 
+class table 
+{ 
+	double height; 
+public: 
+	table(double h) { height=h; } 
+	double getheight() { return height; } 
+}; 
+class roundtable : public table,public circle 
+{ 
+	char *color; 
+public: 
+	roundtable(double h, double r, char c[]) : circle (r) , table (h) 
+	{ 
+		color=new char[strlen(c)+1];
+		strcpy (color, c); 
+	} 
+	char *getcolor() { return color; } 
+}; 
+void main() 
+{ 
+	roundtable rt(0.8,1.2,"黑色"); 
+	cout << "圆桌属性数据:" << endl; 
+	cout << "高度：" <<rt.getheight() << "米" << endl; 
+	cout << "面积：" <<rt.getarea() << "平方米" << endl; 
+	cout << "颜色：" <<rt.getcolor() << endl; 
+} 
+
+========================================================================================================================
+3
+#include<iostream.h> 
+#include<string.h> 
+class object 
+{ 
+	char name[20]; 
+	int no; 
+public: 
+	object(){} 
+	object(char na[],int n) 
+	{ 
+		strcpy(name,na);no=n; 
+	} 
+	void show() 
+	{ 
+		cout<<name<<"("<<no<<")"; 
+	} 
+}; 
+class book:public object 
+{ 
+	char author[10]; 
+public: 
+	book(){} 
+	book(char na[],int n,char auth[]):object(na,n) 
+	{ 
+		strcpy(author,auth); 
+	} 
+void showbook() 
+{ 
+	show(); 
+	cout<<"作者："<<author; 
+} 
+}; 
+class reader:public object 
+{ 
+	book rent[5]; 
+	int k; 
+public: 
+	reader(char na[],int n):object(na,n){k=0;} 
+	void rentbook(book &b) 
+	{ 
+		rent[k]=b; 
+		k++; 
+	} 
+	void showreader() 
+	{ 
+		cout<<"读者：";
+		show(); 
+		cout<<endl<<"所借图书:"<<endl; 
+		for(int i=0;i<k;i++) 
+		{ 
+			cout<<" "<<i+1<<":"; // 5个空格 
+			rent[i].show(); 
+			cout<<endl; 
+		} 
+	} 
+}; 
+void main() 
+{ 
+	book b1("C语言",100,"谭浩强"),b2("数据结构",110,"严蔚敏"); 
+	reader r1("王华",1234); 
+	r1.rentbook(b1); 
+	r1.rentbook(b2); 
+	r1.showreader(); 
+} 
+
+========================================================================================================================
+4
+D类是从B类和C类派生的而B类和C类又都是从A类派生，但这是虚继承关系即是虚基类，因此共用一个的副本，所以对于对象d，d.B::n与d.C::n是一个成员。 
+所以输出为： 
+20，20 
+
+========================================================================================================================
+5
+#include<iostream.h> 
+#include<string.h> 
+class base // 基类 
+{ 
+	char* name;// 姓名 
+	int age; // 年龄 
+public: 
+	base(){} 
+	void setname(char na[]) 
+	{ 
+		name=new char[strlen(na)+1]; 
+		strcpy(name,na); 
+	} 
+	void setage(int a) 
+	{ 
+		age=a; 
+	} 
+	char* getname() { return name; } 
+	int getage() { return age; } 
+}; 
+class leader:virtual public base // 领导类 
+{ 
+	char *job;//职务 
+	char *dep;//部门 
+public: 
+	leader() { } 
+	void setjob(char jb[]) 
+	{ 
+		job=new char[strlen(jb)+1]; 
+		strcpy (job, jb); 
+	} 
+	void setdep(char dp[]) 
+	{ 
+		dep=new char [strlen (dp) +1] ; 
+		strcpy (dep, dp); 
+	} 
+	char *getjob() { return job; } 
+	char *getdep() { return dep; } 
+}; 
+class engineer:virtual public base // 工程师类 
+{ 
+	char *major; // 专业 
+	char *prof; // 职称 
+public: 
+	engineer () { } 
+	void setmajor(char maj []) 
+	{ 
+		major=new char[strlen(maj)+1]; 
+		strcpy (major,maj); 
+	} 
+	void setprof(char pf[]) 
+	{ 
+		prof=new char[strlen(pf)+1]; 
+		strcpy (prof, pf); 
+	} 
+	char*getmajor() {return major; } 
+	char*getprof() {return prof; } 
+} ; 
+class chairman:public leader,public engineer // 主任工程师类 
+{ } ; 
+void main() 
+{ 
+	chairman c; 
+	c.setname("李明"); 
+	c.setage(42); 
+	c.setjob("处长"); 
+	c.setdep("设计处"); 
+	c.setmajor("电站锅炉设计"); 
+	c.setprof("高级工程师"); 
+	cout<< "输出结果："<<endl; 
+	cout << " " << c.getname() << "，年龄" << c.getage()<<"岁，担任" <<c.getdep() <<c.getjob() <<"，"<<endl; 
+	cout << " " << c.getprof() << "，从事" << c.getmajor()<< "专业" << "。 " << endl; 
+} 
+
+或改成带参数的构造函数：
+
+#include<iostream.h> 
+#include<string.h> 
+class base // 基类 
+{ 
+	char* name;// 姓名 
+	int age; // 年龄 
+public: 
+	base(char na[], int a)
+	{
+		name=new char[strlen(na)+1]; 
+		strcpy(name,na);
+		age=a;
+	}  
+	~base()
+	{
+		delete[] name;
+	}
+	char* getname() { return name; } 
+	int getage() { return age; } 
+}; 
+class leader:virtual public base // 领导类 
+{ 
+	char *job;//职务 
+	char *dep;//部门 
+public: 
+	leader(char na[], int a, char jb[], char dp[]): base(na,a)
+	{ 
+		job=new char[strlen(jb)+1]; 
+		strcpy (job, jb);
+		dep=new char [strlen (dp) +1] ; 
+		strcpy (dep, dp); 
+	} 
+	~leader()
+	{
+		delete[] job;
+		delete[] dep;
+	}
+	char *getjob() { return job; } 
+	char *getdep() { return dep; } 
+}; 
+class engineer:virtual public base // 工程师类 
+{ 
+	char *major; // 专业 
+	char *prof; // 职称 
+public: 
+	engineer (char na[], int a, char maj [], char pf[]) :base(na, a)
+	{
+		major=new char[strlen(maj)+1]; 
+		strcpy (major,maj); 
+		prof=new char[strlen(pf)+1]; 
+		strcpy (prof, pf); 
+	} 
+	~engineer()
+	{
+		delete[] major;
+		delete[] prof;
+	}
+	char*getmajor() {return major; } 
+	char*getprof() {return prof; } 
+} ; 
+class chairman:public leader,public engineer // 主任工程师类 
+{
+public:
+	chairman(char na[], int a, char jb[], char dp[], char maj [],char pf[]):base(na, a),leader( na , a, jb , dp ),engineer ( na ,  a,  maj , pf )
+	{
+
+	}
+} ; 
+void main() 
+{ 
+	chairman c("李明",42,"处长","设计处","电站锅炉设计","高级工程师");
+	cout<< "输出结果："<<endl; 
+	cout << " " << c.getname() << "，年龄" << c.getage()<<"岁，担任" <<c.getdep() <<c.getjob() <<"，"<<endl; 
+	cout << " " << c.getprof() << "，从事" << c.getmajor()<< "专业" << "。 " << endl; 
+} 
+
+========================================================================================================================
+6
+本题说明重载运算符(=)的使用方法。operator=成员函数实现两个对象的赋值。 
+所以输出为： n=10 
+
+========================================================================================================================
+7
+本题说明重载运算符++的使用方法。operator++()为前缀重载运算符，operator++(int)为后缀重载运算符。A++的语句调用后缀重载运算符，++B语句调用前缀重载运算符。 
+所以输出为： 
+n=4 
+n=3 
+
+========================================================================================================================
+8
+本题说明重载下标运算符的使用方法。通过重载下标运算符，使得对于对象a,有a(i,j)等于a.A[i][j]。 
+所以输出为： 1 2 3 4 5 6 7 8 9 10 
+
+========================================================================================================================
+9
+#include<iostream.h> 
+class Point 
+{ 
+	int x,y; 
+public: 
+	Point(){x=y=0;} 
+	Point(int i,int j){x=i;y=j;} 
+	Point(Point &); 
+	~Point(){} 
+	void offset(int,int);	 // 提供对点的偏移 
+	void offset(Point);      // 重载，偏移量用Point类对象表示 
+	bool operator==(Point);  // 运算符重载，判断两个对象是否相同 
+	bool operator!=(Point);  // 运算符重载，判断两个对象是否不相同 
+	void operator+=(Point);  // 运算符重载，将两个点对象相加 
+	void operator-=(Point);  // 运算符重载，将两个点对象相减 
+	Point& operator+(Point); // 运算符重载，相加并将结果放在左操作数中 
+	Point& operator-(Point); // 运算符重载，相减并将结果放在左操作数中 
+	Point& operator=(Point);
+	Point& operator++();
+	Point operator++(int);
+	int getx(){return x;} 
+	int gety(){return y;} 
+	void disp() 
+	{ 
+		cout<<"("<<x<<","<<y<<")"<<endl; 
+	} 
+}; 
+Point::Point(Point &p) 
+{ 
+	x=p.x; y=p.y; 
+} 
+void Point::offset(int i,int j) 
+{ 
+	x+=i; y+=j; 
+} 
+void Point::offset(Point p) 
+{ 
+	x+=p.getx(); y+=p.gety(); 
+} 
+bool Point::operator==(Point p) 
+{ 
+	if(x==p.getx()&&y==p.gety()) 
+		return 1; 
+	else 
+		return 0; 
+} 
+bool Point::operator!=(Point p) 
+{ 
+	if(x!=p.getx()||y!=p.gety()) 
+		return 1; 
+	else 
+		return 0; 
+} 
+void Point::operator+=(Point p) 
+{ 
+	x+=p.getx(); y+=p.gety(); 
+} 
+void Point::operator-=(Point p) 
+{ 
+	x-=p.getx(); y-=p.gety(); 
+} 
+Point& Point::operator+(Point p) 
+{ 
+	x+=p.x; y+=p.y; 
+	return *this; 
+} 
+Point& Point::operator-(Point p) 
+{ 
+	x-=p.x;y-=p.y; 
+	return *this; 
+} 
+Point& Point::operator=(Point p)
+{
+	x = p.x;
+	y = p.y;
+	return *this; 
+}
+Point& Point::operator++()
+{
+	x++;
+	y++;
+	return *this; 
+}
+Point Point::operator++(int)
+{
+	Point old = *this;
+	++(*this);
+	return old;
+}
+void main() 
+{ 
+	Point p1(2,3),p2(3,4),p3 = p2; 
+	cout<<"1:"; p3.disp(); 
+	p3.offset(10,10); 
+	cout<<"2:"; p3.disp(); 
+	cout<<"3:"<<(p2==p3)<<endl; 
+	cout<<"4:"<<(p2!=p3)<<endl; 
+	p3+=p1; 
+	cout<<"5:"; p3.disp(); 
+	p3-=p2; 
+	cout<<"6:"; p3.disp(); 
+	p3=p1+p3; 
+	cout<<"7:"; p3.disp(); 
+	p3=p1-p2; 
+	cout<<"8:"; p3.disp(); 
+	cout<<"9:"; (++p3).disp(); 
+	cout<<"10:"; (p3++).disp(); 
+	cout<<"11:"; p3.disp(); 
+} 
+
+
+========================================================================================================================
+10
+本题说明重载运算符-和+的使用。operator-和operator+两个友元函数实现两个对象的减法和加法。所以输出为： 
+n=10 // s2-s1 
+n=30 // s2+s1 
+
+========================================================================================================================
+11
+#include<iostream.h> //只能用iostream.h，用iostream的话，vc6报错INTERNAL COMPILER ERROR
+#include<math.h> 
+class Triangle 
+{ 
+	int x,y,z; 
+	double area; 
+public: 
+	Triangle(int i,int j,int k) 
+	{ 
+		double s; 
+		x=i;y=j;z=k; 
+		s=(x+y+z)/2.0; 
+		area=sqrt(s*(s-x)*(s-y)*(s-z)); 
+	} 
+	void disparea() 
+	{ 
+		cout<<"Area="<<area<<endl; 
+	} 
+	friend double operator+(Triangle t1,Triangle t2) 
+	{ 
+		return t1.area+t2.area; 
+	} 
+}; 
+void main() 
+{ 
+	Triangle t1(3,4,5),t2(4,5,6); 
+	double s; 
+	cout<<"t1:"; t1.disparea(); 
+	cout<<"t2:"; t2.disparea(); 
+	s=t1+t2; 
+	cout<<"总面积="<<s<<endl; 
+}
+
+========================================================================================================================
+12
+#include<iostream.h> 
+#include<math.h> 
+class Triangle 
+{ 
+	int x,y,z; 
+	double area; 
+public: 
+	Triangle(int i,int j,int k) 
+	{ 
+		double s; 
+		x=i;y=j;z=k; 
+		s=(x+y+z)/2.0; 
+		area=sqrt(s*(s-x)*(s-y)*(s-z)); 
+	} 
+	void disparea() 
+	{ 
+		cout<<"Area="<<area<<endl; 
+	} 
+	friend double operator+(Triangle t1,Triangle t2) 
+	{ 
+		return t1.area+t2.area; 
+	} 
+	friend double operator+(double d,Triangle t) 
+	{ 
+		return d+t.area; 
+	} 
+}; 
+void main() 
+{ 
+	Triangle t1(3,4,5),t2(4,5,6),t3(5,6,7),t4(6,7,8); 
+	double s; 
+	cout<<"t1:"; t1.disparea(); 
+	cout<<"t2:"; t2.disparea(); 
+	cout<<"t3:"; t3.disparea(); 
+	cout<<"t4:"; t4.disparea(); 
+	s=t1+t2+t3+t4; 
+	cout<<"总面积="<<s<<endl; 
+} 
+
+========================================================================================================================
+13
+#include<iostream.h> 
+#define N 10
+class IntArray
+{ 
+public: 
+	IntArray(int _a[])
+	{
+		for(int i=0; i<N; i++)
+		{
+			a[i] = _a[i];
+		}
+	} 	
+	void ResetAll(int _a[])
+	{
+		for(int i=0; i<N; i++)
+		{
+			a[i] = _a[i];
+		}
+	} 	
+	int& operator[](int i)
+	{
+		return a[i];
+	}
+	void Show() 
+	{ 
+		for(int i=0; i<N; i++)
+		{
+			cout<<a[i]<<" ";
+		}
+		cout<<endl;
+	} 
+private:
+	int a[N];
+}; 
+
+void main() 
+{ 
+	int a[10] = {1,2,3,4,5,6,7,8,9,10};
+	IntArray i1(a);
+	i1.Show();
+
+	i1[0] = 111;
+	i1.Show();
+} 
+
+========================================================================================================================
+14
+<<
+
+#include <cstring>
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Data
+{ 
+	int a,b;  
+	char *c;
+public:
+	Data(int x, int y, char z[])
+	{
+		a = x;
+		b = y;
+		c = new char[strlen(z)+1];
+		strcpy(c,z);
+	}
+	~Data()
+	{
+		delete[] c;
+	}
+	friend ostream& operator<<(ostream& os, Data& d)
+	{
+		os<<d.a<<" ";
+		os<<d.b<<" ";
+		os<<d.c<<" ";
+		os<<endl;
+		return os;
+	}	
+};
+
+void main()  
+{
+    Data d1(11,33,"qqqqq");
+    Data d2(22,55,"kk");
+	
+    cout<<d1<<d2;
+}
+
+========================================================================================================================
+15
+#include <cstring>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class String 
+{
+public:
+	// 构造函数的重载
+	String( const char * = 0 );
+	String( const String & );
+	// 析构函数
+	~String();
+	// 赋值操作符+的重载
+	String& operator+( const String & );
+	//String operator+( const String & );
+	String& operator+( const char * );
+	// 赋值操作符=的重载
+	String& operator=( const String & );
+	String& operator=( const char * );
+	// 重载的下标[]操作符
+	char& operator[]( int ) const;
+	// 等于操作符==的重载集合
+	bool operator==( const char * ) const;
+	bool operator==( const String & ) const;
+	// <<重载
+	friend ostream& operator<<( ostream &os, const String & s)
+	{
+		cout<<s._string;
+		return os;
+	}
+	// >>重载
+	friend istream& operator>>( istream &is, String &s)
+	{
+		char t[100];
+		cin>>t;
+		s._string = new char[strlen(t)+1];
+		strcpy(s._string, t);
+		return is;
+	}
+	// 接口
+	int size() { return _size; }
+	char* c_str() { return _string; }
+private:
+	int _size;
+	char *_string;
+};
+
+// String的构造函数             
+String::String(const char *str )   
+{
+	if(str==NULL)                          
+	{
+		_string = new char[1]; 
+		*_string = '\0';                      
+	}	                                       
+	else
+	{
+		int length = strlen(str);           
+		_string = new char[length+1];     
+		strcpy(_string, str);                
+	}
+}	
+// 拷贝构造函数
+String::String(const String &other)   
+{	
+	int length = strlen(other._string);	 
+	_string = new char[length+1];      
+	strcpy(_string, other._string);         
+}
+// String的析构函数
+String::~String(void)             
+{
+	delete [] _string;	                     
+}
+// +重载	
+String& String::operator+( const char *sobj )
+{
+	//strcat(_string,sobj);//长度不够，空间要重新分配
+	//return *this;
+
+	int length = strlen(_string);
+	char* temp = new char[length+1];      
+	strcpy(temp, _string); 
+	
+	_size = length + strlen( sobj ) + 1;
+	delete[] _string;
+	_string = new char[ _size ];
+	strcpy(_string,temp);
+	strcat(_string,sobj);
+
+	delete [] temp;
+	return *this;
+}
+
+// +重载	
+String& String::operator+( const String &other )
+{
+	int length = strlen(_string);
+	char* temp = new char[length+1];      
+	strcpy(temp, _string); 
+	
+	_size = length + strlen( other._string ) + 1;
+	delete[] _string;
+	_string = new char[ _size ];
+	strcpy(_string,temp);
+	strcat(_string,other._string);
+	
+	delete [] temp;
+	return *this;
+}
+/*/ +重载	
+String String::operator+( const String &other )
+{
+	char* temp = new char[strlen(_string) + strlen( other._string ) + 1];  
+	strcpy(temp, _string); 
+	strcat(temp, other._string);
+	String s(temp);
+	delete temp;
+	return s;
+}*/
+
+// =重载	
+String& String::operator=( const char *sobj )
+{
+	// sobj 是个空指针
+	if ( ! sobj ) {
+		_size = 0;
+		delete[] _string;
+		_string = 0;
+	}
+	else {
+		_size = strlen( sobj );
+		delete[] _string;
+		_string = new char[ _size + 1 ];
+		strcpy( _string, sobj );
+	}
+	return *this;
+}
+// =重载
+String & String::operator =(const String& other)  
+{	
+	// (1) 检查自赋值              
+	if(this == &other)
+		return *this;
+	
+	// (2) 释放原有的内存资源         
+	delete [] _string;
+	
+	// (3)分配新的内存资源，并复制内容 
+	_size = strlen(other._string);	
+	_string = new char[_size+1];         
+	strcpy(_string, other._string);
+	
+	// (4)返回本对象的引用         
+	return *this;
+}
+// []重载
+inline char& String::operator[]( int elem ) const
+{
+	if( elem >= 0 && elem < _size )
+		return _string[ elem ];
+	else
+	{
+		cout<<"下标错误！";
+		exit(1);
+	}
+}
+// ==重载
+bool String::operator==( const char* sobj) const
+{
+	int a = strcmp(_string,sobj);
+	if (0 == a) 
+		return true;
+	else
+		return false;
+}
+// ==重载
+bool String::operator==( const String& other) const
+{
+	int a = strcmp(_string,other._string);
+	if (0 == a) 
+		return true;
+	else
+		return false;
+}
+
+void main()
+{
+	/*string s1("abc");
+	string s2="def";
+	string s3="123";
+
+	string s4 = s1 + s2 + s3;
+	cout<<s1<<endl;
+	cout<<s2<<endl;
+	cout<<s3<<endl;
+	cout<<s4<<endl;*/
+
+	String s1("abc");
+	String s2="def";
+	String s3="123";
+
+	String s4 = s1 + s2 + s3;
+	cout<<s1<<endl;
+	cout<<s2<<endl;
+	cout<<s3<<endl;
+	cout<<s4<<endl;
+}
+
+========================================================================================================================
+16
+智能指针
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Person
+{
+public:
+	Person(char* s)
+	{
+		name = new char[strlen(s)+1];
+		strcpy(name,s);
+	}
+	void show()
+	{
+		cout<<name<<endl;
+	}
+	char* getname()
+	{
+		return name;
+	}
+private:
+	char* name;
+};
+
+class PersonPtr
+{
+public:
+	PersonPtr( Person &c ): ptr( &c ) { }
+	~PersonPtr()
+	{
+		delete [] ptr->getname();
+	}
+	//*重载
+	Person& operator*() 
+	{ 
+		return *ptr; 
+	}
+	//->重载
+	Person* operator->() 
+	{ 
+		return ptr; 
+	}
+private:
+	Person* ptr;
+};
+
+void main()  
+{
+    Person per1("zhang li");
+	PersonPtr p(per1);
+	p->show();
+	(*p).show();
+}
+
+
+========================================================================================================================
+17
+#include <iostream>
+using namespace std;
+
+class vehicle
+{
+	int wheel;
+	float weght;
+public:
+	virtual void message()
+	{
+		cout<<"vehicle message"<<endl;
+	}
+};
+
+class car: public vehicle
+{
+	int passenger_load;
+public:
+	void message()
+	{
+		cout<<"car message"<<endl;
+	}
+
+};
+
+class boat: public vehicle
+{
+	int passenger_load;
+public:
+	void message()
+	{
+		cout<<"boat message"<<endl;
+	}
+};
+
+void main()
+{
+	vehicle obj, *p;
+	car obj1;
+	boat obj2;
+	p = &obj;
+	p->message();
+	p = &obj1;
+	p->message();
+	p = &obj2;
+	p->message();
+}
+
+
+========================================================================================================================
+18
+#include <iostream>
+using namespace std;
+
+class figure
+{
+protected:
+	int x,y;
+public:
+	figure(int a,int b)
+	{
+		x = a;
+		y = b;
+	}
+	virtual void show_area()
+	{
+		cout<<"no area for this class"<<endl;
+	}
+};
+
+class triangle: public figure
+{
+public:
+	triangle(int a,int b):figure(a,b){}
+	void show_area()
+	{
+		cout<<"the area of triangle is:"<<x*y*0.5<<endl;
+	}
+
+};
+
+class square: public figure
+{
+public:
+	square(int a):figure(a,a){}
+	void show_area()
+	{
+		cout<<"the area of square is:"<<x*x<<endl;
+	}
+	
+};
+
+class circle: public figure
+{
+public:
+	circle(int a):figure(a,a){}
+	void show_area()
+	{
+		cout<<"the area of square is:"<<x*x*3.1415<<endl;
+	}
+	
+};
+
+void main()
+{
+	figure *p;
+	triangle t(20,20);
+	square s(20);
+	circle c(20);
+	p = &t;
+	p->show_area();
+	p = &s;
+	p->show_area();
+	p = &c;
+	p->show_area();
+}
+
+
+========================================================================================================================
+19
+#include <iostream>
+using namespace std;
+
+class container
+{
+protected:
+	int radius;
+public:
+	container(double a)
+	{
+		radius = a;
+	}
+	virtual double surface_area() = 0;
+	virtual double volume() = 0;
+};
+
+class cube: public container
+{
+public:
+	cube(double radius):container(radius){}
+	double surface_area();
+	double volume();
+};
+
+class sphere: public container
+{
+public:
+	sphere(double radius):container(radius){}
+	double surface_area();
+	double volume();
+};
+
+double cube::surface_area()
+{
+	return(radius*radius*6);
+}
+
+double cube::volume()
+{
+	return(radius*radius*radius);
+}
+
+double sphere::surface_area()
+{
+	return(radius*radius*4*3.1415);
+}
+
+double sphere::volume()
+{
+	return(radius*radius*radius*3.1415*4/3);
+}
+
+void main()
+{
+	container *p;
+	cube c(5);
+	sphere s(5);
+	p = &c;
+	cout<<"the surface_area of cube is:"<<p->surface_area()<<endl;
+	cout<<"the volume of cube is:"<<p->volume()<<endl;
+	p = &s;
+	cout<<"the surface_area of sphere is:"<<p->surface_area()<<endl;
+	cout<<"the volume of sphere is:"<<p->volume()<<endl;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

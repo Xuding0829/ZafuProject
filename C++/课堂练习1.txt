@@ -1,0 +1,1659 @@
+
+1 求出从键盘上输入的10个整数中的最大值，要求输入变量用x表示，存储最大值的变量用max表示。
+
+2 计算并输出22+42+62+...+302的值。
+
+3 某百货公司为了促销，采用购物打折的办法。
+（1）    在1000元以上者，按九五折优惠；
+（2）    在2000元以上者，按九折优惠；
+（3）    在3000元以上者，按八五折优惠；
+（4）    在5000元以上者，按八折优惠。
+编写程序，从键盘上输入购物款数，并以用户输入小于0的任何数作为终止标志,计算并输出优惠价。（要求用switch语句编写）
+
+==========================
+
+4 从键盘输入一个三角形的3条边长，编写一个求三角形面积的函数（通过海仑公式求面积），并将结果显示。
+
+5 输入的整数按逆序输出，要求分别用递归算法和非递归算法实现。如：输入:1 2 3 4 5，输出:5  4  3  2  1
+
+==========================
+
+6 请将P77的例3-12改写成指针传递的函数调用方式
+
+7 编写2个同名函数，分别求三角形面积和矩形面积（通过各自的边长），使用重载的方式分别调用并显示结果。
+
+8 编写程序，实现两个字符串的交换。（请分别用三种参数传递方式实现） 
+例如： 
+char ap[20]="hello"; 
+char bp[20]="how are you?"; 
+交换的结果使得ap和bp指向的内容分别为： 
+ap: "how are you?" 
+bp: "hello"
+
+void swap(char *x,char *y) 
+void swap(char **x,char **y) 
+void swap(char *&x,char *&y)
+
+==========================
+
+设计一个三角形类，用于求面积。
+
+9 下面是一个类的测试程序，设计出能使用如下测试程序的类。 
+void main() 
+{ 
+	Test a; 
+	a.init(68,50); 
+	a.print(); 
+} 
+其执行结果为： 
+测试结果：68-50=18
+
+
+10 写出以下程序的执行结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int x,y; 
+public: 
+	Sample(){x=y=0;} 
+	Sample(int a,int b){x=a;y=b;} 
+	~Sample() 
+	{ 
+		if(x==y) 
+		cout<<"x=y"<<endl; 
+		else 
+		cout<<"x!=y"<<endl; 
+	} 
+	void disp() 
+	{ 
+		cout<<"x="<<x<<",y="<<y<<endl; 
+	} 
+}; 
+
+void main() 
+{ 
+	Sample s1(2,3); 
+	s1.disp(); 
+}
+
+11 设计一个立方体类Box，它能计算并输出立方体的体积和表面积。 
+分析： 
+Box类包含三个私有数据成员a(立方体边长)、volume(体积)和area(表面积)，另有两个构造函数以及seta()(设置立方体边长)、getvolume()(计算体积)、getarea()(计算表面积)和disp()(输出结果)。
+
+12 写出以下程序的执行结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int x,y; 
+public: 
+	Sample(){x=y=0;} 
+	Sample(int i,int j){x=i;y=j;} 
+	void copy(Sample &s); 
+	void setxy(int i,int j){x=i;y=j;} 
+	void print(){cout<<"x="<<x<<",y="<<y<<endl;} 
+}; 
+void Sample::copy(Sample &s) 
+{ 
+	x=s.x;
+	y=s.y; 
+} 
+void func(Sample s1,Sample &s2) 
+{ 
+	s1.setxy(10,20); 
+	s2.setxy(30,40); 
+} 
+void main() 
+{ 
+	Sample p(1,2),q; 
+	q.copy(p); 
+	func(p,q); 
+	p.print(); 
+	q.print(); 
+}
+
+重写三角形类，按标准写法实现相应的构造函数、析构函数和拷贝构造函数，并求面积。
+
+封装一个书本类，内有书名、价格、出版社、作者等信息。
+
+
+#include <iostream>
+using namespace std;
+
+class Sample 
+{ 
+public: 
+	int x,y; 
+}; 
+
+int main()
+{
+	Sample s;
+	s.x = 1;
+	s.y = 2;
+
+    return 0;
+}
+写一个测试程序，验证以上类实例化之后的对象内部存储空间。
+
+
+==========================组合
+
+13 编写一个程序，设计一个点类Point，求两个点之间的距离。 
+分析： 
+可以设计一个普通函数distance(Point &p1,Point &p2),用于计算p1和p2点之间的距离。
+
+14 创建一个职工类Employee，该类能表示姓名、岗位、联系电话。该类中有构造函数、changInfo()、display()函数构造函数初始化每个成员，changInfo()函数能改变职工的地址信息，display()函数把完整的职工信息打印出来。再创建一个部门类Department，该类由若干个职工对象构成，并能表示部门名称、办公室地址，有构造函数、显示信息的成员函数。
+
+==========================
+
+15 分析以下程序的执行结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+	static int sum; 
+public: 
+	Sample(int x){n=x;} 
+	void add(){sum+=n;} 
+	void disp() 
+	{ 
+		cout<<"n="<<n<<",sum="<<sum<<endl; 
+	} 
+}; 
+
+int Sample::sum=0; // 静态数据成员赋初值 
+
+void main() 
+{ 
+	Sample a(2),b(3),c(5); 
+	a.add(); 
+	a.disp(); 
+	b.add(); 
+	b.disp(); 
+	c.add(); 
+	c.disp(); 
+} 
+
+16 分析以下程序执行的结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int A; 
+	static int B; 
+public: 
+	Sample(int a){A=a,B+=a;} 
+	static void func(Sample s); 
+}; 
+
+void Sample::func(Sample s) 
+{ 
+	cout<<"A="<<s.A<<",B="<<B<<endl; 
+} 
+
+int Sample::B=0; 
+
+void main() 
+{ 
+	Sample s1(2),s2(5); 
+	Sample::func(s1); 
+	Sample::func(s2); 
+} 
+
+17 分析以下程序的输出结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int x; 
+public: 
+	Sample(int a) 
+	{ 
+		x=a; 
+		cout<<"constructing object:x="<<x<<endl; 
+	} 
+}; 
+
+void func(int n) 
+{ 
+	static Sample obj(n); 
+} 
+
+void main() 
+{ 
+	func(1); 
+	func(10); 
+} 
+
+18 编写一个程序，输入N个学生数据，包括学号、姓名、成绩，要求输出这些学生数据并计算平均分。 
+分析： 
+设计一个学生类Stud，除了包括no(学号)、name(姓名)和deg(成绩)数据成员外，有两个静态变量sum和num，分别存放总分和人数，另有两个普通成员函数setdata()和disp()，分别用于给数据成员赋值和输出数据成员的值，另有一个静态成员函数avg()，它用于计算平均分。
+
+
+设计一个类，能统计当前卖出了几杯咖啡及营业额。
+
+==========================
+
+19 分析以下程序的执行结果
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+public: 
+	Sample(){} 
+	Sample (int m){n=m;} 
+	friend void square(Sample &s) 
+	{ 
+		s.n=s.n*s.n; 
+	} 
+	void disp() 
+	{ 
+		cout<<"n="<<n<<endl; 
+	} 
+}; 
+void main() 
+{ 
+	Sample a(10); 
+	square(a); 
+	a.disp(); 
+} 
+
+20 分析以下程序的执行结果 
+#include<iostream.h> 
+class B; 
+class A 
+{ 
+	int i; 
+	friend B; 
+	void disp(){cout<<i<<endl;} 
+}; 
+class B 
+{ 
+public: 
+	void set(int n) 
+	{ 
+		A a; 
+		a.i=n; // i是对象a的私有数据成员，在友元类可以使用 
+		a.disp(); // disp()是对象a的私有成员函数，在友元类可以使用 
+	} 
+}; 
+void main() 
+{ 
+	B b; 
+	b.set(2); 
+} 
+21 写一个学生类student，包括学生姓名、成绩，设计友元函数disp()输出成绩大于等于80分以上者。  
+
+22 写一个学生类student，包括学生姓名、成绩，设计一个友元函数，比较两个学生成绩的高低，并返回成绩较高的同学的姓名。
+
+23 编写一个程序，设计一个Person类，包括学号、姓名和成绩等私有数据成员，不含任何成员函数，只将main()设置为该类的友元函数。（注意：main()函数与其它的函数一样可以设置为类的友元函数，这样就可以在其中使用类对象的私有数据成员）
+
+==========================
+
+24 编写一个程序，输入N个学生数据，包括学号、姓名、成绩，要求输出这些学生数据并计算平均分。(通过对象数组来测试)
+
+25 编写一个程序，在已设置好若干个用户名/口令后，通过输入用户名，查找对应的口令，连续执行这一过程直到用户输入结束标记(“end“)为止。 
+分析： 
+设计一个UserInfor类，数据成员有user和pass两个字符数组，存储用户名和口令，另有一个构造函数和getuser()、getpass()两个成员函数，用于获取用户名和口令。在main()中设计一个对象数组u,当用户输入一个用户名后，在u中查找，找到后输出对应的口令，找不到时输出相应的提示信息。 
+
+==========================
+
+26 分析以下程序执行的结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int x,y; 
+public: 
+	Sample(){x=y=0;} 
+	Sample(int a,int b){x=a;y=b;} 
+	void disp() 
+	{ 
+		cout<<"x="<<x<<",y="<<y<<endl; 
+	} 
+}; 
+
+void main() 
+{ 
+	Sample s1,s2(1,2),s3(10,20); 
+	Sample *pa[3]={&s1,&s2,&s3}; 
+	for(int i=0;i<3;i++) 
+	pa[i]->disp(); 
+} 
+
+27 编写一个程序，输入N个学生数据，包括学号、姓名、成绩，要求输出这些学生数据并计算平均分。(通过对象数组和对象指针来测试)
+
+   编写一个程序，输入N个学生数据，包括学号、姓名、成绩，要求输出这些学生数据并计算平均分。(通过动态内存分配对象数组测试)
+
+28 分析以下程序的执行结果 
+#include<iostream.h> 
+class Sample 
+{ 
+public: 
+	int x; 
+	int y; 
+void disp() 
+{ 
+	cout<<"x="<<x<<",y="<<y<<endl; 
+} 
+}; 
+
+void main() 
+{ 
+	int Sample::*pc; 
+	Sample s; 
+	pc=&Sample::x; 
+	s.*pc=10; 
+	pc=&Sample::y; 
+	s.*pc=20; 
+	s.disp(); 
+} 
+
+29 分析以下程序的执行结果 
+#include<iostream.h> 
+class Sample 
+{ 
+	int x; 
+	int y; 
+public: 
+	Sample(int a,int b) 
+	{ 
+		x=a;y=b; 
+	} 
+	int getx(){return x;} 
+	int gety(){return y;} 
+}; 
+
+void main() 
+{ 
+	int (Sample::*fp)(); 
+	fp=&Sample::getx; 
+	Sample s(2,7),*p=&s; 
+	int v=(p->*fp)(); 
+	fp=&Sample::gety; 
+	int t=(p->*fp)(); 
+	cout<<"v="<<v<<",t="<<t<<endl; 
+} 
+
+30 编写一个程序，已有若干个学生数据，这些数据包括学号、姓名、成绩，求平均分。要求使用成员函数指针调用它们。 
+解： 
+设计一个学生类student,包括no(学号)、name(姓名)、deg1(成绩)数据成员和1个静态数据成员sum1(累计总分)；另外有一个构造函数和1个求平均分的成员函数和一个disp()成员函数。 
+
+31
+#include<iostream.h> 
+#include<string.h> 
+class student 
+{ 
+	char name[10]; 
+	int deg; 
+public: 
+	student(char na[],int d) 
+	{ 
+		strcpy(name,na); 
+		deg=d; 
+	} 
+	friend char *compare(student &s1,student &s2) //思考能否去掉&
+	{ 
+		if(s1.deg>s2.deg) 
+			return s1.name;
+		else if(s1.deg==s2.deg) 
+			return "分数一样"; 
+		else 
+			return s2.name;
+	} 
+}; 
+void main() 
+{ 
+	student s1("王华",69); 
+	student s2("李名",86); 
+	char *n;
+	n = compare(s1,s2);
+	cout<<"分数较高的同学是:"<<endl; 
+	cout<<n<<endl; 
+} 
+
+32
+#include<iostream.h> 
+#include<string.h> 
+
+void swap(char *x,char *y) 
+{ 
+	char temp[20]; //思考能否改成char *temp
+	strcpy(temp,x); 
+	strcpy(x,y); 
+	strcpy(y,temp); 
+} 
+
+void main() 
+{ 
+	char ap[20]="hello"; 
+	char bp[20]="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+
+33
+#include<iostream.h> 
+#include<string.h> 
+void swap(char *x,char *y) 
+{ 
+	char *temp = x;
+	strcpy(x,y);    
+	strcpy(y,temp); 
+			
+} 
+
+void main() 
+{ 
+	char ap[20]="hello"; 
+	char bp[20]="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+
+34
+#include<iostream.h> 
+#include<string.h> 
+
+void swap(char *x,char *y) 
+{ 
+	char temp[20]; 
+	strcpy(temp,x); 
+	strcpy(x,y);
+	strcpy(y,temp); 
+} 
+
+void main() 
+{ 
+	char *ap="hello"; 
+	char *bp="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+
+35
+#include<iostream>
+using namespace std;
+#include <string.h>
+void main()
+{
+	char *p = "abcdef";
+	char a[3];
+	strcpy(a,p);//可以，但这样写不好
+	cout<<a<<endl;
+	cout<<a[5]<<endl;
+}
+
+/////////////////////////////////////////////////////////////////
+#include<iostream.h> 
+#include<string.h> 
+void swap(char *x,char *y) 
+{ 
+	char *temp = new char[strlen(x)+1];
+	strcpy(temp,x);  
+	strcpy(x,y); 
+	strcpy(y,temp);
+	delete[] temp;
+} 
+
+void main() 
+{ 
+	char ap[20]="hello"; 
+	char bp[20]="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+
+
+
+
+
+
+
+
+
+========================================================================================================================
+参考：
+1
+#include<iostream.h>
+       void main() 
+       {
+ 	       int x,max; 
+	       cin>>x;
+	       max=x;  
+           for(int i=0;i<9;i++) 
+		{
+		       cin>>x;
+		       if(x>max) max=x;  
+	        }
+	       cout<<"max:"<<max<<endl;
+       }
+
+============================================================
+2
+#include<iostream.h>
+        void main()
+        {
+	        int i,s=0;
+	        for(i=2;i<=30;i+=2) s+=i*i;
+	        cout<<"s="<<s<<endl;
+        }
+
+============================================================
+3
+#include <iostream>
+using namespace std;
+void main()
+{
+    int cost;
+    double price,d;
+    cin>>cost;
+    if(cost>5000)
+        d=0.8;
+    switch(cost/1000)
+    {
+    case 0:d=1.0;break;
+    case 1:d=0.95;break;
+    case 2:d=0.9;break;
+    case 3:case 4:d=0.85;break;
+    }
+    price=cost*d;
+    cout<<price<<endl;
+}
+============================================================
+4
+#include<iostream>
+#include<cmath>
+using namespace std;
+double area(int a,int b,int c);
+void main()
+{
+    int a,b,c;
+    cin>>a>>b>>c;
+    cout<<"Area:"<<area(a,b,c)<<endl;
+}
+
+double area(int a,int b,int c)
+{
+    double s,area;
+    s=(a+b+c)/2.0;
+    area=sqrt(s*(s-a)*(s-b)*(s-c));
+    return area;
+}
+============================================================
+5
+#include<iostream>
+using namespace std;
+void print(int a);
+void print1(int a);
+void main()
+{
+    int n;
+    cin>>n;
+    print(n);
+    cout<<endl;
+    print1(n);
+}
+
+void print(int a)   //非递归
+{
+    while(a>0)
+    {
+        cout<<a%10<<" ";
+        a=a/10;
+    }
+}
+
+void print1(int a)   //递归
+{
+    if(a>0)
+    {
+        cout<<a%10<<" ";
+        print1(a/10);
+    }        
+}
+============================================================
+6
+#include <stdafx.h>
+
+#include<iostream>
+using namespace std;
+void Swap(int *a, int *b);
+void main()
+{
+	int x(5), y(10);
+	cout<<"x="<<x<<"    y="<<y<<endl;
+	Swap(&x,&y);
+	cout<<"x="<<x<<"    y="<<y<<endl;
+}
+
+void Swap(int *a, int *b)
+{
+	int t;
+	 t = *a;
+	*a = *b;
+	*b = t;
+}
+============================================================
+7
+#include<iostream>
+#include<cmath>
+using namespace std;
+double area(int a,int b,int c);
+double area(int a,int b,int c,int d);
+void main()
+{
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    cout<<"Triangle Area:"<<area(a,b,c)<<endl;
+    cout<<"Square Area:"<<area(a,b,c,d)<<endl;
+}
+
+double area(int a,int b,int c)
+{
+    double s,area;
+    s=(a+b+c)/2.0;
+    area=sqrt(s*(s-a)*(s-b)*(s-c));
+    return area;
+}
+
+double area(int a,int b,int c,int d)
+{
+    double area;
+    if(a == b)
+	{
+		if(a == c)
+			area = a*d;
+		else
+			area = a*c;
+	}
+	else
+		area = a*b;
+
+    return area;
+}
+============================================================
+8
+#include<iostream.h> 
+#include<string.h> 
+
+void swap(char *x,char *y) 
+{ 
+	char temp[20]; 
+	strcpy(temp,x); 
+	strcpy(x,y); 
+	strcpy(y,temp); 
+} 
+
+void main() 
+{ 
+	char ap[20]="hello"; 
+	char bp[20]="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+============================
+#include<iostream.h> 
+#include<string.h> 
+void swp(char **x,char **y) 
+{ 
+	char *temp; 
+	temp=*x;
+	*x=*y;
+	*y=temp; 
+} 
+void main() 
+{ 
+	char *ap="hello"; 
+	char *bp="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swp(&ap,&bp);  
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+} 
+===========================
+#include<iostream.h> 
+#include<string.h> 
+void swap(char *&x,char *&y) // 引用作为参数 
+{ 
+	char *temp; 
+	temp=x;
+	x=y;
+	y=temp; 
+} 
+void main() 
+{ 
+	char *ap="hello"; 
+	char *bp="how are you?"; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+	swap(ap,bp); 
+	cout<<"swap ap,bp"<<endl; 
+	cout<<"ap:"<<ap<<endl; 
+	cout<<"bp:"<<bp<<endl; 
+}
+============================================================
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Triangle
+{
+public:
+	void Get(int _a, int _b, int _c);
+	void ShowArea();
+private:
+	int a, b, c;
+	double s;
+};
+
+void Triangle::Get(int _a, int _b, int _c)
+{
+	a = _a;
+	b = _b;
+	c = _c;
+	double k = (a+b+c)/2.0;
+	s = sqrt(k*(k-a)*(k-b)*(k-c));
+}
+
+void Triangle::ShowArea()
+{
+	cout<<"The area of this triangle is:"<<s<<endl;
+}
+
+int main()
+{
+	Triangle t;
+	t.Get(3,4,5);
+	t.ShowArea();
+    return 0;
+}
+
+=======================================================
+
+9
+#include<iostream.h> 
+class Test 
+{ 
+	int x,y; 
+public: 
+	void init(int,int); 
+	void print(); 
+}; 
+
+void Test::init(int i,int j) 
+{ 
+	x=i;y=j; 
+} 
+
+void Test::print() 
+{ 
+	cout<<"测试结果："<<x<<"-"<<y<<"="<<x-y<<endl; 
+}
+
+============================================================
+11
+#include<iostream.h> 
+class Box 
+{ 
+	float a; 
+	float volume; 
+	float area; 
+public: 
+	Box(){} 
+	Box(float r){a=r;} 
+	void seta(float r){a=r;} 
+	void getvolume(){volume=a*a*a;} 
+	void getarea(){area=6*a*a;} 
+	void disp() 
+	{ 
+		cout<<"体积："<<volume<<",表面积："<<area<<endl; 
+	} 
+}; 
+
+void main() 
+{ 
+	Box obj1(4.5),obj2; 
+	obj2.seta(6.4); 
+	obj1.getvolume(); 
+	obj1.getarea(); 
+	cout<<"obj1=>"; 
+	obj1.disp(); 
+	obj2.getvolume(); 
+	obj2.getarea(); 
+	cout<<"obj2=>"; 
+	obj2.disp(); 
+}
+
+==============================================
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Triangle
+{
+public:
+	Triangle();
+	Triangle(int _a, int _b, int _c);
+	~Triangle();
+	Triangle(Triangle& _t);
+	void Change(int _a, int _b, int _c);
+	void ShowArea();
+private:
+	int a, b, c;
+	double s;
+};
+
+Triangle::Triangle()
+{
+	a = 1;
+	b = 1;
+	c = 1;
+	double k = (a+b+c)/2.0;
+	s = sqrt(k*(k-a)*(k-b)*(k-c));
+}
+
+Triangle::Triangle(int _a, int _b, int _c)
+{
+	a = _a;
+	b = _b;
+	c = _c;
+	double k = (a+b+c)/2.0;
+	s = sqrt(k*(k-a)*(k-b)*(k-c));
+}
+
+Triangle::~Triangle()
+{
+
+}
+
+Triangle::Triangle(Triangle& _t)
+{
+	a = _t.a;
+	b = _t.b;
+	c = _t.c;
+	s = _t.s;
+}
+
+void Triangle::Change(int _a, int _b, int _c)
+{
+	a = _a;
+	b = _b;
+	c = _c;
+	double k = (a+b+c)/2.0;
+	s = sqrt(k*(k-a)*(k-b)*(k-c));
+}
+
+void Triangle::ShowArea()
+{
+	cout<<"The area of this triangle is:"<<s<<endl;
+}
+
+int main()
+{
+	Triangle t1;
+	t1.ShowArea();
+
+	Triangle t2(3,4,5);
+	t2.ShowArea();
+
+	Triangle t3(t2);
+	t3.ShowArea();
+
+	t3.Change(1,1,1);
+	t3.ShowArea();
+    return 0;
+}
+===============================================================
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Book
+{
+public:
+	Book();
+	Book(char*, double, char*, char*);
+	Book(Book&);
+	~Book();
+	void PrintInfo();
+	void ChangeInfo(char*, double, char*, char*);
+private:
+	char name[20];
+	double price;
+	char press[20];
+	char author[10];
+};
+
+Book::Book()
+{
+	strcpy(name, "aaa");
+	price = 0.0;
+	strcpy(press, "aaa");
+	strcpy(author, "aaa");
+}
+
+Book::Book(char* n, double pri, char* pre, char* a)
+{
+	strcpy(name, n);
+	price = pri;
+	strcpy(press, pre);
+	strcpy(author, a);
+}
+
+Book::Book(Book& b)
+{
+	strcpy(name, b.name);
+	price = b.price;
+	strcpy(press, b.press);
+	strcpy(author, b.author);	
+}
+
+Book::~Book()
+{}
+
+void Book::PrintInfo()
+{
+	cout<<"The info of the book:"<<name<<" "<<price<<" "<<press<<" "<<author<<endl;
+}
+
+void Book::ChangeInfo(char* n, double pri, char* pre, char* a)
+{
+	strcpy(name, n);
+	price = pri;
+	strcpy(press, pre);
+	strcpy(author, a);
+}
+
+int main()
+{
+	Book b1;
+	b1.PrintInfo();
+
+	Book b2("C语言程序设计", 26.8, "清华大学出版社", "谭浩强");
+	b2.PrintInfo();
+	b2.ChangeInfo("图像处理", 31.6, "科学出版社", "李明");
+	b2.PrintInfo();
+
+	Book b3(b2);
+	b3.PrintInfo();
+
+    return 0;
+}
+
+============================================================
+#include <iostream>
+using namespace std;
+
+class Sample 
+{ 
+public: 
+	int x,y; 
+}; 
+
+void main()
+{
+	Sample s;
+	s.x = 1;
+	s.y = 2;
+	cout<<sizeof(s)<<endl;
+	cout<<*(int*)(&s)<<endl;
+	cout<<*((int*)(&s)+1)<<endl;
+}
+
+
+===============================================================
+13 
+#include<iostream.h> 
+#include<math.h> 
+class Point 
+{ 
+	int x,y; 
+public: 
+	Point(int i,int j){x=i;y=j;} 
+	int getx(){ return x;} 
+	int gety(){ return y;} 
+	void disp() 
+	{ 
+		cout<<"("<<x<<"'"<<y<<")"; 
+	} 
+}; 
+float distance(Point &p1,Point &p2) // 对象引用作为参数 
+{ 
+	float d; 
+	d=sqrt((p1.getx()-p2.getx())*(p1.getx()-p2.getx())+(p1.gety()-p2.gety())*(p1.gety()-p2.gety())); 
+	return d; 
+} 
+void main() 
+{ 
+	Point p1(2,2),p2(5,5); 
+	p1.disp(); cout<<"与"; p2.disp(); 
+	cout<<"之间距离="<<distance(p1,p2)<<endl; 
+}
+===============================================================
+14 
+#include<iostream.h> 
+#include<string.h> 
+class Employee 
+{ 
+public: 
+	Employee(char n[], char w[], char p[]); 
+	void Changeinfo(char n[], char w[], char p[]); 
+	void Display(); 
+private: 
+	char name[10]; // 姓名 
+	char work[20]; // 职务
+	char phone[15]; // 手机 
+}; 
+Employee::Employee(char n[], char w[], char p[]) 
+{ 
+	strcpy(name,n); 
+	strcpy(work,w); 
+	strcpy(phone,p); 
+} 
+
+void Employee::Changeinfo(char n[], char w[], char p[]) 
+{ 
+	strcpy(name,n); 
+	strcpy(work,w); 
+	strcpy(phone,p); 
+} 
+
+void Employee::Display() 
+{ 
+	cout<<" 姓名:"<<name<<endl; 
+	cout<<" 职务:"<<work<<endl; 
+	cout<<" 手机:"<<phone<<endl; 
+} 
+
+class Department 
+{ 
+public: 
+	Department(char n[], char o[], Employee p1, Employee p2, Employee p3); 
+	void Changeinfo(char n[], char o[]); 
+	void Display(); 
+private: 
+	Employee e1, e2, e3;
+	char name[20];
+	char office[20];
+};
+
+Department::Department(char n[], char o[], Employee p1, Employee p2, Employee p3):e1(p1), e2(p2), e3(p3)
+{
+	strcpy(name,n); 
+	strcpy(office,o);
+}
+
+void Department::Changeinfo(char n[], char o[])
+{
+	strcpy(name,n); 
+	strcpy(office,o);
+}
+
+void Department::Display()
+{
+	cout<<" 部门名称:"<<name<<endl; 
+	cout<<" 办公地点:"<<office<<endl;
+	e1.Display();
+	e2.Display();
+	e3.Display();
+}
+
+void main() 
+{ 
+	Employee e1("王华","普通员工","13566667777"); 
+	Employee e2("杨丽","主管","13988880000"); 
+	Employee e3("张风","实习生","13655552222"); 
+	e1.Display(); 
+	e2.Display(); 
+	e3.Display(); 
+
+	Department d1("销售部", "3幢506室", e1, e2, e3);
+	d1.Display();
+} 
+=============================================================== 
+15
+本题说明静态数据成员的使用方法。在类中定义了一个静态数据成员sum，在main()之前给它赋初值0，然后在main()中定义了三个对象，并执行各自的add()和disp()方法。所以输出为： 
+n=2,sum=2 
+n=3,sum=5 
+n=5,sum=10 
+注意：静态数据成员脱离具体的对象独立存在，其存储单元不是任何对象存储空间的一部分，但逻辑上所有对象都共享这一存储单元，对静态数据成员的任何操作都会访问这一存储单元，从而影响这一存储单元的所有对象。
+
+===========================================================
+16
+本题说明了静态成员函数的使用方法。其中的数据成员B是静态数据成员，求B之值是在构造函数中进行的。所以输出为： 
+A=2,B=7 
+A=5,B=7 
+注意：静态成员函数与静态数据成员一样，也不是对象成员。静态成员函数的调用不同于普通的成员函数。在静态成员函数的实现中，引用类的非静态数据成员是通过对象进行的，如本题中s.A，引用类的静态数据成员是直接进行的，如本题中的B。 
+
+===========================================================
+17
+本题说明静态对象构造函数的调用情况，由于在func()函数中定义的对象obj是静态对象，故只被构造一次，所以输出为： 
+counstructing object:x=1 
+注意：静态对象和静态变量一样，只被构造一次。块作用域的静态变量，在首次进入到定义该静态对象的函数时，构造该静态对象，以后进入该函数时不再构造静态对象。 
+
+===========================================================
+18 
+#include<iostream.h> 
+#include<string.h> 
+class Stud 
+{ 
+	int no; 
+	char name[10]; 
+	int deg; 
+	static int num; 
+	static int sum; 
+public: 
+	void setdata(int n,char na[],int d) 
+	{ 
+		no=n; 
+		deg=d; 
+		strcpy(name,na); 
+		sum+=d; 
+		num++; 
+	} 
+	static double avg() 
+	{ 
+		return sum/num; 
+	} 
+	void disp() 
+	{ 
+		cout<<no<<name<<deg<<endl; 
+	} 
+}; 
+
+int Stud::sum=0; 
+int Stud::num=0; 
+
+void main() 
+{ 
+	Stud s1; 
+	Stud s2;
+	Stud s3;
+	int n,d; 
+	char na[10]; 
+	
+	cout<<"输入学号 姓名 成绩:"<<endl; 
+	cin>>n>>na>>d;
+	s1.setdata(n,na,d); 
+
+	cout<<"输入学号 姓名 成绩:"<<endl; 
+	cin>>n>>na>>d;
+	s2.setdata(n,na,d); 
+
+	cout<<"输入学号 姓名 成绩:"<<endl; 
+	cin>>n>>na>>d;
+	s3.setdata(n,na,d); 
+
+	cout<<"输出数据:"<<endl; 
+	cout<<"学号 姓名 成绩"<<endl; 
+	s1.disp();
+	s2.disp();
+	s3.disp();
+	cout<<"平均分="<<Stud::avg(); 
+} 
+
+-----------------------
+
+#include<iostream> 
+#include<cstring> 
+using namespace std;
+
+class Coffee 
+{
+public: 
+	Coffee(char n[], int p) 
+	{ 
+		price = p;
+		strcpy(name,n); 
+		sum+=p; 
+		num++; 
+	} 
+	static void Static() 
+	{ 
+		cout<<"卖出的总杯数："<<num<<endl;
+		cout<<"卖出的总金额："<<sum<<endl;
+	} 
+private:
+	char name[10]; 
+	int price; 
+	static int num; 
+	static int sum;
+}; 
+
+int Coffee::sum=0; 
+int Coffee::num=0; 
+
+void main() 
+{ 
+	Coffee c1("摩卡", 25);
+	Coffee c2("卡布奇诺", 30);
+	Coffee c3("星冰乐", 20);
+
+	Coffee::Static();
+} 
+
+
+
+#include<iostream> 
+#include<cstring> 
+using namespace std;
+
+class Starbucks 
+{
+public: 
+	Starbucks() 
+	{ 
+		strcpy(shopname, "农林大学店"); 
+		num = 0; 
+		sum = 0;
+	} 
+	void Sale(char* _cofeename, int price, int _num)
+	{
+		num = num + _num;
+		sum = sum + _num*price;
+		cout<<shopname<<"卖出了"<<_num<<"杯"<<_cofeename<<endl;
+	}
+	void Static() 
+	{ 
+		cout<<shopname<<"当前卖出的总杯数："<<num<<endl;
+		cout<<shopname<<"当前卖出的总金额："<<sum<<endl;
+	} 
+private:
+	char shopname[20]; 
+	int num; 
+	int sum;
+}; 
+
+void main() 
+{ 
+	Starbucks s;
+
+	s.Sale("摩卡", 25, 2);
+	s.Static();
+	
+	s.Sale("拿铁", 30, 1);
+	s.Static();
+}
+===========================================================
+21
+#include<iostream.h> 
+#include<string.h> 
+class student 
+{ 
+	char name[10]; 
+	int deg; 
+public: 
+	student(char na[],int d) 
+	{ 
+		strcpy(name,na); 
+		deg=d; 
+	} 
+	friend void disp(student &s) 
+	{ 
+		if(s.deg>=80) 
+			cout<<s.name<<s.deg<<endl; 
+	} 
+}; 
+void main() 
+{ 
+	student s1("王华",78); 
+	student s2("张华",68);
+	student s3("卢华",88);
+
+	cout<<"成绩高于80分的同学有:"; 
+	disp(s1);
+	disp(s2);
+	disp(s3);
+} 
+===========================================================
+
+22
+#include<iostream.h> 
+#include<string.h> 
+class student 
+{ 
+	char name[10]; 
+	int deg; 
+public: 
+	student(char na[],int d) 
+	{ 
+		strcpy(name,na); 
+		deg=d; 
+	} 
+	friend char *compare(student &s1,student &s2) 
+	{ 
+		if(s1.deg>s2.deg) 
+			return s1.name; 
+		else if(s1.deg==s2.deg) 
+			return "分数一样"; 
+		else 
+			return s2.name; 
+	} 
+}; 
+void main() 
+{ 
+	student s1("王华",69); 
+	student s2("李名",86); 
+	char *n;
+	n = compare(s1,s2);
+	cout<<"分数较高的同学是:"<<endl; 
+	cout<<n<<endl; 
+} 
+
+===========================================================
+23
+#include<iostream.h> 
+class Person 
+{ 
+	int no; 
+	char name[10]; 
+	int deg; 
+public: 
+	friend void main(); 
+}; 
+void main() 
+{ 
+	Person obj; 
+	cout<<"输入学号:"; 
+	cin>>obj.no; 
+	cout<<"姓名："; 
+	cin>>obj.name; 
+	cout<<"成绩："; 
+	cin>>obj.deg; 
+	cout<<"输出结果"<<endl; 
+	cout<<"学生"<<obj.name<<"(学号"<<obj.no<<")成绩为"<<obj.deg<<endl; 
+} 
+
+===========================================================
+24
+#include<iostream.h> 
+#include<string.h> 
+const N = 3;
+class Stud 
+{ 
+	int no; 
+	char name[10]; 
+	int deg; 
+	static int num; 
+	static int sum; 
+public: 
+	void setdata(int n,char na[],int d) 
+	{ 
+		no=n; 
+		deg=d; 
+		strcpy(name,na); 
+		sum+=d; 
+		num++; 
+	} 
+	static double avg() 
+	{ 
+		return sum/num; 
+	} 
+	void disp() 
+	{ 
+		cout<<no<<name<<deg<<endl; 
+	} 
+}; 
+
+int Stud::sum=0; 
+int Stud::num=0; 
+
+void main() 
+{ 
+	Stud s[N]; 
+	int n,d; 
+	char na[10]; 
+	
+	for(int i=0;i<N;i++)
+	{
+		cout<<"输入学号 姓名 成绩:"<<endl; 
+		cin>>n>>na>>d;
+		s[i].setdata(n,na,d); 
+	}
+	for(int j=0;j<N;j++)
+	{
+		cout<<"输出数据:"<<endl; 
+		cout<<"学号 姓名 成绩"<<endl; 
+		s[j].disp();
+		cout<<"平均分="<<Stud::avg(); 
+	}
+} 
+
+===========================================================
+25
+#include<iostream.h> 
+#include<string.h> 
+class User 
+{ 
+	char user[10]; 
+	char pass[7]; 
+public: 
+	User(char [],char []); 
+	char *getuser(); 
+	char *getpass(); 
+}; 
+
+User::User(char u[],char p[]) 
+{ 
+	strcpy(user,u); 
+	strcpy(pass,p); 
+} 
+
+char *User::getuser() 
+{ 
+	return user; 
+} 
+
+char *User::getpass() 
+{ 
+	return pass; 
+} 
+
+void main() 
+{ 
+	User ua[]={User("Li","123456"),User("wang","654321"), 
+		User("Chen","213412"),User("Xu","878616"), 
+		User("Ma","876574"),User("Song","666666")}; 
+	char name[10]; 
+	while(1) 
+	{ 
+		cout<<"输入用户名："; 
+		cin>>name; 
+		if(strcmp(name,"end")==0) 
+			break; 
+		for(int i=0;i<6;i++) 
+			if(strcmp(name,ua[i].getuser())==0) 
+			{ 
+				cout<<" 用户口令："<<ua[i].getpass()<<endl; 
+				break; 
+			} 
+			if(i==6) 
+				cout<<" 用户名不存在"<<endl; 
+	} 	
+} 
+
+===========================================================
+27
+#include<iostream.h> 
+#include<string.h> 
+const N = 3;
+class Stud 
+{ 
+	int no; 
+	char name[10]; 
+	int deg; 
+	static int num; 
+	static int sum; 
+public: 
+	void setdata(int n,char na[],int d) 
+	{ 
+		no=n; 
+		deg=d; 
+		strcpy(name,na); 
+		sum+=d; 
+		num++; 
+	} 
+	static double avg() 
+	{ 
+		return sum/num; 
+	} 
+	void disp() 
+	{ 
+		cout<<no<<name<<deg<<endl; 
+	} 
+}; 
+
+int Stud::sum=0; 
+int Stud::num=0; 
+
+void main() 
+{ 
+	Stud s[N]; 
+	Stud *p;
+	int n,d; 
+	char na[10]; 
+	
+	for(int i=0;i<N;i++)
+	{
+		cout<<"输入学号 姓名 成绩:"<<endl; 
+		cin>>n>>na>>d;
+		p = &s[i];
+		p->setdata(n,na,d); 
+	}
+	for(int j=0;j<N;j++)
+	{
+		cout<<"输出数据:"<<endl; 
+		cout<<"学号 姓名 成绩"<<endl; 
+		p = &s[j];
+		p->disp();
+		cout<<"平均分="<<Stud::avg(); 
+	}
+} 
+
+================================
+
+#include<iostream.h> 
+#include<string.h> 
+int N = 3;
+class Stud 
+{ 
+	int no; 
+	char name[10]; 
+	int deg; 
+	static int num; 
+	static int sum; 
+public: 
+	void setdata(int n,char na[],int d) 
+	{ 
+		no=n; 
+		deg=d; 
+		strcpy(name,na); 
+		sum+=d; 
+		num++; 
+	} 
+	static double avg() 
+	{ 
+		return sum/num; 
+	} 
+	void disp() 
+	{ 
+		cout<<no<<name<<deg<<endl; 
+	} 
+}; 
+
+int Stud::sum=0; 
+int Stud::num=0; 
+
+void main() 
+{ 
+	Stud* p = new Stud[N];
+	Stud* p2 = 0;
+	int n,d; 
+	char na[10]; 
+	
+	for(int i=0;i<N;i++)
+	{
+		cout<<"输入学号 姓名 成绩:"<<endl; 
+		cin>>n>>na>>d;
+		p2 = &p[i];
+		p2->setdata(n,na,d); 
+		//p[i].setdata(n,na,d); 
+	}
+	for(int j=0;j<N;j++)
+	{
+		cout<<"输出数据:"<<endl; 
+		cout<<"学号 姓名 成绩"<<endl; 
+		p2 = &p[j];
+		p2->disp();
+		//p[j].disp();
+		cout<<"平均分="<<Stud::avg(); 
+	}
+	delete[] p;
+} 
+
+
+===========================================================
+30
+#include<iostream.h> 
+#include<string.h> 
+#define N 4 
+class student 
+{ 
+	int no; 
+	char name[10]; 
+	int deg1; //成绩 
+	static int sum1; //总分  
+public: 
+	student(int n,char na[],int d1) 
+	{ 
+		no=n; 
+		strcpy(name,na); 
+		deg1=d1;
+		sum1+=deg1;
+	} 
+	double avg1(){return (sum1*1.0)/N;} 
+	void disp() 
+	{ 
+		cout<<no<<name<<deg1<<endl; 
+	} 
+}; 
+int student::sum1=0; 
+
+void main() 
+{ 
+	double (student::*fp)(); // 定义成员函数指针 
+	student s1(1,"Li",67); 
+	student s2(2,"Ma",90); 
+	student s3(3,"Zheng",89); 
+	student s4(4,"Chen",67); 
+	cout<<"输出结果"<<endl; 
+	s1.disp(); 
+	s2.disp(); 
+	s3.disp(); 
+	s4.disp(); 
+	fp=student::avg1; 
+	cout<<"平均分:"<<(s1.*fp)()<<endl; 
+} 
+
+
+
+
+
+

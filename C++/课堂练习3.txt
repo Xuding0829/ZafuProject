@@ -1,0 +1,639 @@
+1.分析以下程序的执行结果
+#include<iostream.h> 
+template <class T> 
+T abs(T x) 
+{ 
+	return (x>0?x:-x); 
+} 
+void main() 
+{ 
+	cout<<abs(-3)<<","<<abs(-2.6)<<endl; 
+} 
+
+
+2.编写一个对具有n个元素的数组x[]求最大值的程序，要求将求最大值的函数设计成函数模板。  
+可以将max()函数设计成一个函数模板:template<class T> T max(T x[],int n) 
+
+
+3.编写一个函数模板，它返回两个值中的较小者，同时要求能正确处理字符串。 
+可以设计一个函数模板template<class T> T min(T a,T b)，来处理int、float和char 等数据类型，但为了能同时正确处理字符串，可再添加一个重载函数专门处理字符串比较，即char *min(char *a,char *b)。 
+
+
+4.分析以下程序的执行结果
+#include<iostream.h> 
+template<class T> 
+class Sample 
+{ 
+	T n; 
+public: 
+	Sample(){} 
+	Sample(T i){n=i;} 
+	Sample<T> operator+(const Sample<T>&); 
+	void disp(){cout<<"n="<<n<<endl;} 
+}; 
+template<class T> 
+Sample<T> Sample<T>::operator+(const Sample<T>& s) 
+{ 
+	static Sample<T> temp; 
+	temp.n=n+s.n; 
+	return temp; 
+} 
+void main() 
+{ 
+	Sample<int> s1(10),s2(20),s3; 
+	s3=s1+s2; 
+	s3.disp(); 
+} 
+
+
+5.分析以下程序的执行结果
+#include<iostream.h> 
+template <class T> 
+class Sample 
+{ 
+	T n; 
+public: 
+	Sample(T i){n=i;} 
+	void operator++(); 
+	void disp(){cout<<"n="<<n<<endl;} 
+}; 
+template <class T> 
+void Sample<T>::operator++() 
+{ 
+	n+=1; //注意：不能用n++;因为double型不能++ 
+} 
+void main() 
+{ 
+	Sample<char> s('a'); 
+	++s; 
+	s.disp(); 
+} 
+
+
+6.编写一个Sample类模板，内有1个私有数据成员为T n，请在该类模板中设计一个operator==重载运算符函数 ，用于比较各对象的n数据是否相等。
+
+7.编写一个Sample类模板，内有2个私有数据成员，请在该类模板中设计一个operator==重载运算符函数 ，用于比较各对象的数据成员是否相等。
+
+
+
+
+
+//no use member template 
+#include<iostream.h> 
+template <class T> 
+class MyClass 
+{ 
+	T value; 
+public: 
+	void assign(const MyClass<T>& x)
+	{
+		value = x.value;
+	}
+}; 
+
+void main() 
+{ 
+	MyClass<double> d1;
+	MyClass<double> d2;
+	MyClass<int> i; 
+	
+	d2.assign(d1);
+	d2.assign(i);//编译错误，类型
+}
+
+
+//use member template 
+#include<iostream.h> 
+template <class T> 
+class MyClass 
+{ 
+	T value; 
+public: 
+	T getvalue() const
+	{
+		return value;
+	}
+	template <class X>
+	void assign(const MyClass<X>& x)
+	{
+		value = x.getvalue();
+		//value = x.value;//编译错误，必须通过接口访问
+	}
+}; 
+
+void main() 
+{ 
+	MyClass<double> d; 
+	MyClass<int> i; 
+	
+	d.assign(d);
+	d.assign(i);
+}
+
+
+//when use typename
+#include <iostream>
+using namespace std;
+
+class Q
+{
+public:
+	typedef int SubType;
+protected:
+private:
+};
+
+template <class T>
+class Myclass
+{
+public:
+	typename T::SubType *p;
+protected:
+private:
+};
+
+int main()
+{
+	Myclass<Q> a;
+	int b = 3;
+	a.p = &b;
+	cout<<*(a.p)<<endl;
+
+	return 0;
+}
+
+
+//operator= could be left-value
+#include<iostream.h> 
+class Sample 
+{ 
+	int n; 
+public: 
+	Sample(){} 
+	Sample(int i){n=i;} 
+	Sample& operator =(Sample); 
+	void operator++(int);
+	void disp(){cout<<"n="<<n<<endl;} 
+}; 
+Sample& Sample::operator=(Sample s) 
+{ 
+	Sample::n=s.n; 
+	return *this; 
+} 
+void Sample::operator++(int)
+{
+	n++;
+}
+void main() 
+{ 
+	Sample s1(10),s2; 
+	(s2=s1)++; 
+	s2.disp(); 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================================
+2
+#include<iostream.h> 
+template <class T> 
+T max(T x[],int n) 
+{ 
+	int i; 
+	T maxv=x[0]; 
+	for(i=1;i<n;i++) 
+		if(maxv<x[i]) 
+			maxv=x[i]; 
+	return maxv; 
+} 
+void main() 
+{ 
+	int a[]={4,5,2,8,9,3}; 
+	double b[]={3.5,6.7,2,5.2,9.2}; 
+	cout<<"a数组最大值："<<max(a,6)<<endl; 
+	cout<<"b数组最大值："<<max(b,5)<<endl; 
+} 
+
+====================================================================
+3
+#include<iostream.h> 
+#include<string.h> 
+template<class T> 
+T min(T a,T b) 
+{ 
+	return (a<b?a:b); 
+} 
+char *min(char *a,char *b) 
+{ 
+	return (strcmp(a,b)<0?a:b); 
+} 
+void main() 
+{ 
+	double a=3.56,b=8.23; 
+	char s1[]="Hello",s2[]="World"; 
+	cout<<"输出结果:"<<endl; 
+	cout<<" "<<a<<","<<b<<"中较小者:"<<min(a,b)<<endl; 
+	cout<<" "<<s1<<","<<s2<<"中较小者:"<<min(s1,s2)<<endl; 
+} 
+
+====================================================================
+6
+#include<iostream.h> 
+template <class T> 
+class Sample 
+{ 
+	T n; 
+public: 
+	Sample(T i){n=i;} 
+	bool operator==(Sample&); 
+}; 
+template <class T> 
+bool Sample<T>::operator==(Sample& s) 
+{ 
+	return (n==s.n)?true:false;
+} 
+void main() 
+{ 
+	Sample<int> s1(5); 
+	Sample<int> s2(5); 
+	if(s1==s2)
+		cout<<"s1与s2的数据成员n相等"<<endl;
+	else
+		cout<<"s1与s2的数据成员n不相等"<<endl;
+} 
+
+====================================================================
+7
+#include<iostream.h> 
+template <class T, class P> 
+class Sample 
+{ 
+	T n; 
+	P m;
+public: 
+	Sample(T i, P j){n=i; m=j;} 
+	bool operator==(Sample&); 
+}; 
+template <class T, class P> 
+bool Sample<T,P>::operator==(Sample& s) 
+{ 
+	return (n==s.n&&m==s.m)?true:false;
+} 
+void main() 
+{ 
+	Sample<int, double> s1(5,3.00); 
+	Sample<int, double> s2(5,3.00); 
+	if(s1==s2)
+		cout<<"s1与s2的数据成员n相等"<<endl;
+	else
+		cout<<"s1与s2的数据成员n不相等"<<endl;
+} 
+
+
+
+000000000000000000000000000000000000000000000000000000000000000000000000000000000   STL
+
+////////////////////////////////////////////////////////////////////////////////
+练习用户输入一组数，找出大于3的数
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void main()
+{
+    vector<int> coll;
+	
+    for (int i=1; i<=6; ++i) {
+        coll.push_back(i);
+    }
+	
+    for (i=0; i<coll.size(); ++i) {
+        cout << coll[i] << ' ';
+    }
+    cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+练习用户输入一组数，找出绝对值最小的整数
+
+#include <iostream>
+#include <deque>
+using namespace std;
+
+void main()
+{
+    deque<float> coll;
+	
+    for (int i=1; i<=6; ++i) {
+        coll.push_front(i*1.1); 
+    }
+	
+    for (i=0; i<coll.size(); ++i) {
+        cout << coll[i] << ' ';
+    }
+    cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <list>
+using namespace std;
+
+void main()
+{
+    list<char> coll; 
+	
+    for (char c='a'; c<='z'; ++c) {
+        coll.push_back(c);
+    }
+	
+    while (! coll.empty()) {
+        cout << coll.front() << ' ';
+        coll.pop_front();
+    }
+    cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+练习放学生对象进list，顺序输出学生成绩
+
+#include <iostream>
+#include <list>
+using namespace std;
+
+void main()
+{
+    list<char> coll; 
+
+    for (char c='a'; c<='z'; ++c) {
+        coll.push_back(c);
+    }
+
+    list<char>::const_iterator pos;
+    for (pos = coll.begin(); pos != coll.end(); ++pos) {
+        cout << *pos << ' ';
+    }
+    cout << endl;
+}
+
+
+#include <iostream>
+#include <list>
+#include <cstring>
+using namespace std;
+
+class stu
+{
+public:
+	char name[10];
+};
+
+void main()
+{
+    list<stu> coll; 
+
+	stu s1,s2,s3;
+	strcpy(s1.name,"aa");
+	strcpy(s2.name,"bb");
+	strcpy(s3.name,"cc");
+
+    coll.push_back(s1);
+	coll.push_back(s2);
+	coll.push_back(s3);
+
+    list<stu>::iterator pos;
+    for (pos = coll.begin(); pos != coll.end(); ++pos) {
+        cout << (*pos).name << ' ';
+    }
+    cout << endl;
+}
+
+/////////////////////////////////////////////////////////
+按逆序输出
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+void main()
+{
+    stack<int> coll;
+	
+    for (int i=1; i<=6; ++i) {
+        coll.push(i); 
+    }
+	
+    int l = coll.size();
+    for (i=0; i<l; ++i) {
+        cout << coll.top() << ' ';
+		coll.pop();
+    }
+    cout << endl;
+}
+
+/////////////////////////////////////////////////////////
+将1 2 3结合成123
+
+#include <iostream>
+#include <queue>
+using namespace std;
+
+void main()
+{
+    queue<int> coll;  
+	
+    for (int i=1; i<=6; ++i) {
+        coll.push(i); 
+    }
+	
+	int l = coll.size();
+	int m = 0;
+
+    for (i=0; i<l; ++i) {
+        m = 10*m + coll.front();
+		coll.pop();
+    }
+    cout << m;
+}
+
+/////////////////////////////////////////////////////////  warning的解决：#pragma warning(disable: 4786)
+练习一组数，按大到小输出，注意end()
+
+#include <iostream>
+#include <set>
+using namespace std;
+
+void main()
+{
+    // type of the collection
+	set<int> coll;
+	//multiset<int> coll;
+
+    /* insert elements from 1 to 6 in arbitrary order
+     * - value 1 gets inserted twice
+     */
+    coll.insert(3);
+    coll.insert(1);
+    coll.insert(5);
+    coll.insert(4);
+    coll.insert(1);
+    coll.insert(6);
+    coll.insert(2);
+
+    /* print all elements
+     * - iterate over all elements
+     */
+    set<int>::iterator pos;
+	//multiset<int>::iterator pos;
+    for (pos = coll.begin(); pos != coll.end(); ++pos) {
+        cout << *pos << ' ';
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+练习按序号，依次输出成绩
+
+#include <map>
+#include <string>
+#include <iostream>
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+	//multimap<int,string> coll;
+	map<int,string> coll;
+	
+	coll.insert(make_pair(2,"a"));
+	coll.insert(make_pair(1,"this"));
+	coll.insert(make_pair(4,"of"));
+	coll.insert(make_pair(6,"string"));
+	coll.insert(make_pair(1,"is"));
+	coll.insert(make_pair(3,"multimap"));
+
+	//coll.insert(map<int, string>::value_type(2,"love"));
+	//coll.insert(map<int, string>::value_type(2,"the"));
+	//coll.insert(map<int, string>::value_type(1,"I"));
+	//coll.insert(map<int, string>::value_type(3,"world"));
+	
+	//multimap<int,string>::iterator pos;
+	map<int,string>::iterator pos;
+	for(pos=coll.begin();pos!=coll.end();++pos)
+	{
+		cout<<pos->second<<" ";
+	}
+	cout<<endl;
+	return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+int main()
+{
+/* type of the container:
+* - map: elements key/value pairs
+* - string: keys have type string
+* - float: values have type float
+	*/
+    typedef map<string,float> StringFloatMap;
+	
+    StringFloatMap coll;
+	
+    // insert some elements into the collection
+    coll["VAT"] = 0.15;
+    coll["Pi"] = 3.1415;
+    coll["an arbitrary number"] = 4983.223;
+    coll["Null"] = 0;
+	
+    /* print all elements
+	* - iterate over all elements
+	* - element member first is the key
+	* - element member second is the value
+	*/
+    StringFloatMap::iterator pos;
+    for (pos = coll.begin(); pos != coll.end(); ++pos) {
+        cout << "key: \"" << pos->first << "\" "
+			<< "value: " << pos->second << endl;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void main()
+{
+    vector<int> coll;
+    vector<int>::iterator pos;
+
+    // insert elements from 1 to 6 in arbitrary order
+    coll.push_back(2);
+    coll.push_back(5);
+    coll.push_back(4);
+    coll.push_back(1);
+    coll.push_back(6);
+    coll.push_back(3);
+
+	// print all elements
+    for (pos=coll.begin(); pos!=coll.end(); ++pos) {
+        cout << *pos << ' ';
+    }
+	cout<<endl;
+
+    // find and print minimum and maximum elements
+    pos = min_element (coll.begin(), coll.end());
+    cout << "min: " << *pos << endl;
+    pos = max_element (coll.begin(), coll.end());
+    cout << "max: " << *pos << endl;
+
+    // sort all elements
+    sort (coll.begin(), coll.end());
+	// print all elements
+    for (pos=coll.begin(); pos!=coll.end(); ++pos) {
+        cout << *pos << ' ';
+    }
+	cout<<endl;
+
+    // find the first element with value 3
+    pos = find (coll.begin(), coll.end(),  // range
+                3);                        // value
+
+    // reverse the order of the found element with value 3 and all following elements
+    reverse (pos, coll.end());
+
+    // print all elements
+    for (pos=coll.begin(); pos!=coll.end(); ++pos) {
+        cout << *pos << ' ';
+    }
+    cout << endl;
+}
+
+
+
+
+
+
+
+
+
+
