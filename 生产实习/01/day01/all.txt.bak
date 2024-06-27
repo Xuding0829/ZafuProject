@@ -1,0 +1,66 @@
+今天学习的内容
+1:简介实训项目
+  1.1:项目内容[java web-员工管理] 
+  java;jdbc;servlet;html;css
+2:项目开发流程
+  mysql数据(创建表;添加数据;更新数据;删除数据)
+  jdbc
+  servlet
+  html
+  css
+3:作业提交(分组 ppt;代码)
+
+4.1:创建数据库
+#utf8国际标准码支持全世界所有国家和地区文字
+create database emp charset=utf8;
+#进入库
+use emp;
+#
+create table t_emp(
+ id int primary key auto_increment,
+ name varchar(25),
+ salary decimal(10,2),
+ job  varchar(25)
+);
+    
+##重点知识######
+-货币类型通 decimal高精度浮点数
+-更高要求   int    单位分
+例示: 存储10元钱   实际1000分
+
+
+
+4.2:jdbc连接操作数据库 maven
+ 1:下载安装jdbc与mysql驱动程序(java与mysql软件)
+ 2:创建项目 maven 下载安装软件包
+  2.1:在pom.xml指定需要下载软件包 5.1.47
+      mysql-connector-java
+  2.2:点击刷新按钮立即下载
+ 3:项目中大量操作数据库(频繁创建数据库连接)
+  -小项目中需要工具DBUtils.java 处理数据库连接
+  1:类工具类DBUtils.java DBTools.java
+    1.1:加载mysql驱动程序
+    Class.forName('com.mysql.jdbc.Driver')
+    1.2:创建数据库连接  
+    DriverManager.getConnection('jdbc:mysql://127.0.0.1:3306/emp
+    ','root','123456');
+    1.3:获取连接
+   2:常见错误
+    ##################知识点忘了没关系##出错秒调###
+    2.1:com.mysql.jdbc.Driver 加载失败(少见)
+    原因:mysql驱动程序maven没有下载成功
+    解决:pom.xml检验下载(刷新)
+    2.2:密码不正确
+    Access denied for user 'root'
+    原因:mysql密码指定错误
+    2.3:数据表不存在
+    原因:Table 'emp.emp' doesn't exist
+    解决:检查表名称改正确
+    2.4:url参数不正确
+     Establishing SSL connection
+    原因:mysql版本太高了
+    解决:添加url参数
+    原先: "jdbc:mysql://localhost:3306/emp";
+    新:   "jdbc:mysql://localhost:3306/emp?useSSL=true";
+    2.5:如何调前端错误
+

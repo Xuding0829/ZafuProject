@@ -1,0 +1,6 @@
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:14:10:47 +0800] "GET /web-demo HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:14:10:47 +0800] "GET /web-demo/ HTTP/1.1" 404 969 http-bio-8080-exec-3 8
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:14:10:50 +0800] "GET /web-demo/demo2 HTTP/1.1" 200 - http-bio-8080-exec-4 2
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:20:21:44 +0800] "GET /web-demo HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:20:21:44 +0800] "GET /web-demo/ HTTP/1.1" 404 969 http-bio-8080-exec-3 13
+0:0:0:0:0:0:0:1 - - [30/Jun/2021:20:21:49 +0800] "GET /web-demo/demo1 HTTP/1.1" 200 - http-bio-8080-exec-4 2
