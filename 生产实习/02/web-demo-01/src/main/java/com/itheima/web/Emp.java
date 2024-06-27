@@ -2,7 +2,7 @@ package com.itheima.web;
 
 public class Emp {
     private int id;
-            private String name;
+    private String name;
 
     public Emp(String name) {
         this.name = name;
