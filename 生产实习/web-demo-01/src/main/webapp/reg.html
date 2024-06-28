@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+    </style>
+</head>
+<body>
+<!--第一层顶部标题 start-->
+<div style="width:820px;height:96px;background-color:rgb(133,195,41);margin:0 auto;">
+    <span style="color:#fff;font-size:29px;float:left"> main </span>
+    <span style="color:#fff;font-size:14px;float: right"> 2024/6/26 </span>
+    <div style="clear:both;width:0;"> </div>
+</div>
+<!--第一层底部标题 end-->
+
+<!--第二层 装饰条 start-->
+<div style="height:26px;width:820px;
+background-color:rgb(116,168,245);margin:0 auto;
+border-top:1px solid #fff;">
+</div>
+<!--第二层 装饰条 end-->
+
+<!--第三层 表单 start-->
+<div style="height:299px;width:820px;margin:0 auto;background-color:#f1f1f1;">
+    <h3>注册</h3>
+    <form method="get" action = "/web-demo/empreg" onsubmit="return fn()">
+        <ul style="list-style: none">
+            <li>
+                <label style="font-size:12px;height:12px;width:112px;display:inline-block;text-align:right;">姓名：</label>
+                <input style="width:184px;height:24px;" name = "name" id="name2" onblur="fnuname()"/>
+                <span id="unametip"></span>
+            </li>
+            <li>
+                <label style="font-size:12px;height:12px;width:112px;display:inline-block;text-align:right;">密码：</label>
+                <input style="width:184px;height:24px;"id="pwd"name="pwd"onblur="fnpwd()"/>
+                <span id="pwdtip"></span>
+            </li>
+            <li>
+                <label style="font-size:12px;height:12px;width:112px;display:inline-block;text-align:right;">职务：</label>
+                <input style="width:184px;height:24px;"id ="job"name="job"value=""onblur="fnjob()"/>
+                <span id="jobtip"style="font-size: 12px;"></span>
+            </li>
+            <!--
+            <li>
+                <label style="font-size: 12px;height:12px;width:112px;display:inline-block;text-align:right;">性别：</label>
+                <input type="radio" value="f"/>
+                <span style="font-size: 12px;"> 男</span>
+                <input type="radio" value="m"/>
+                <span style="font-size: 12px;"> 女</span>
+            </li>
+            -->
+            <li>
+                <label style="font-size: 12px;width: 112px;display:inline-block;text-align: right;">薪水</label>
+                <input type="text" value="" style="width:184px;height:24px;"id="salary"name="salary"onblur="fnsalary()"/>
+                <span id="salarytip"></span>
+            </li>
+            <li style="padding-left: 25px;">
+                <input type="submit" value="注册" style="width:45px;height:24px;"/>
+            </li>
+        </ul>
+    </form>
+</div>
+<!--第三层 表单 end-->
+
+<script>
+    // 创建函数，用于处理用户名检测
+    var global_count = 0;
+    // 创建全集变量用于表示所有数数据是否通过
+    var global_success = false;
+    // 如果用户名格式不正确，返回false
+    function fnuname(){
+        // 1: 获取用户输入用户名内容
+        // 2: 如果内容为空
+        // 3: 创建正则表达式验证用户名3 - 14位（字母与数字）
+        // var v = uname.value;
+        // var reg = /^[0-9a-zA-Z]{3,14}$/;
+        // if(reg.test(v) == false){
+        //     // alert("请输入正确的用户名")
+        //     unametip.innerHTML = "格式为3-14位字母与数字";
+        //     unametip.style.color = "red";
+        // } else{
+        //     // alert("正确")
+        //     unametip.innerHTML = "正确";
+        //     unametip.style.color = "#333";
+        // }
+
+        // 1.创建正则表达
+        var reg = /^[0-9a-zA-Z]{4,18}$/
+        // 2.验证用户是否正确
+        var v = name2.value;
+        if(reg.test(v) == true) {
+            // 3.正确，显示提示消息并且global_count++
+            unametip.innerHTML = "通过";
+            unametip.style.color = "green";
+            global_count++;
+            return true;
+        } else {
+            // 4.错误，显示提示消息并且global_count__;
+            unametip.innerHTML = "格式为字母或数字4-20位";
+            unametip.style.color = "red";
+            global_count--;
+            return false;
+        }
+    }
+    function fnpwd(){
+        var v = pwd.value;
+        var reg = /^[0-9a-zA-Z]{6,20}$/;
+        if(reg.test(v) == true) {
+            pwdtip.innerHTML = "密码合法";
+            pwdtip.style.color = "green";
+            global_count++;
+            return true;
+        } else{
+            pwdtip.innerHTML="密码输入不合法，6-20位字母或数字";
+            pwdtip.style.color = "red";
+            global_count--;
+            return false;
+        }
+
+    }
+    // 创建函数，用于验证职务
+    function fnjob(){
+        // 1: 验证正则表达式
+        var v = job.value;
+        // 2: 验证
+        var reg = /^[a-zA-Z]{2,9}$/;
+        // 3: 如果验证失败显示提示信息 格式为汉字2-20为
+        if(reg.test(v) == false)        {
+            jobtip.innerHTML = "格式为汉字2-20位";
+            jobtip.style.color = "red";
+            global_count--;
+            return false;
+        }
+        // 4: 如果验证成功显示正确
+        else {
+            jobtip.innerHTML = "成功";
+            jobtip.style.color = "green";
+            global_count++;
+            return true;
+        }
+    }
+    // 创建函数，用于验证薪水
+    function fnsalary(){
+        var v = salary.value;
+        // 1.创建正则表达式
+        var reg = /^[0-9]{1,10}$/
+        // 2.验证
+        if(reg.test(v) == true) {
+            salarytip.innerHTML = "薪水输入合法";
+            salarytip.style.color = "green";
+            global_count++;
+            return true;
+        } else {
+            salarytip.innerHTML = "请输入合法的薪水";
+            salarytip.style.color = "red";
+            global_count--;
+            return false;
+        }
+        // 3.正确 提示
+        // 4.失败 提示
+    }
+
+    // 创建函数fn
+    // 作用：重新验证表单所有项目有一个项目失败结果不提交表单
+    // 程序停止
+    // 技巧：判断条件 global_count
+    function  fn(){
+        // 清空global—count
+        global_count = 0;
+        // 检测用户名等
+        fnuname();
+        fnsalary();
+        fnpwd();
+        fnjob();
+        // 判断
+        if(global_count == 4)
+            return true;
+        else
+            return false ;
+    }
+
+</script>
+</body>
+</html>

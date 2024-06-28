@@ -81,7 +81,7 @@ public class DBUtils {
         // 2: 创建sql
         String sql = "select * from t_emp";
         // 3: 创建stmt
-        PreparedStatement stmt = (PreparedStatement) conn.prepareStatement(sql);
+        Statement stmt = conn.createStatement();
         // 4: 查询
         ResultSet rs = stmt.executeQuery(sql);
         // 5: 创建循环
