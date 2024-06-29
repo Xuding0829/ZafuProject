@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+    </style>
+</head>
+<body>
+    <style>
+    </style>
+    <table style = "width:80%;" border="1">
+        <thead>
+            <tr>
+                <td>编码</td>
+                <td>姓名</td>
+                <td>薪水</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody id = "data"> </tbody>
+    </table>
+    <!--创建更新用户窗口 start-->
+    <style>
+        #inputDiglog{
+            padding:15px 25px;
+            width:205px;
+            height:210px;
+            background-color:#f1f1f1;
+            border:1px solid #f0f0f0;
+            box-shadow:10px 10px 5px #888888;
+            display:none;/*隐藏*/
+        }
+        #inputDiglog li{
+            margin-top:12px;
+            font-size:12px;
+        }
+    </style>
+    <div id="inputDiglog">
+        <h3 style="text-align:center;">雇员信息</h3>
+        <ul style="list-style:none;">
+            <li>用户名:<span id="uname">东东</span></li>
+            <li>职务:<span id="job">manager</span></li>
+            <li>薪水:<input type="text" id="salary" /></li>
+            <li>
+                <a href="#" onclick="ok()">确定</a>
+                <a href="#" onclick="cancel()">取消</a>
+            </li>
+            <li>
+                <input type="hidden" id="eid" />
+            </li>
+        </ul>
+    </div>
+    <!--创建更新用户窗口 end-->
+    <!--下载并安装aioxs库 小哥上岗-->
+    <script src = "https://unpkg.com/axios/dist/axios.min.js"> </script>
+    <script>
+        // 重写script
+        // 下单->小哥跑商家->取餐->送回来
+        // 创建函数获取菜单
+        async function getlist() {
+            // 创建变量保存URL地址
+            var url = "http://localhost:8080/web-demo/list";
+            try {
+                // 发送请求
+                const result = await axios.get(url);
+                // 获取数据
+                var str = "";
+                for (var i = 0; i < result.data.length; i++) {
+                    var item = result.data[i];
+                    str += `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.salary}</td>
+                        <td>
+                            <a href="#" onclick="delemp(${item.id})">delete</a>
+                            <a href="#" update="updateemp(${item.id})">update</a>
+                            <a href="#">find</a>
+                        </td>
+                    </tr>
+                    `;
+                }
+                // 将数据插入到tbody中
+                document.getElementById("data").innerHTML = str;
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+        // 立即出发
+        getlist();
+    </script>
+    <script>
+        // 删除指定用户，并且刷新网页数据
+        async function delemp(id){
+            // alert(123);
+            // 显示确认的窗口
+            var rs = confirm("是否删除数据");
+            // 判断用户是否点击了是 true
+            if(rs == false)
+                return;
+            // 发送ajax请求（删除）
+            var url = "http://localhost:8080/web-demo/remove";
+            url += "?id="+id;
+            const result = await axios.get(url);
+            // 局部刷新
+            getlist();
+        }
+    </script>
+    <script>
+        // 创建一个函数完成更新前预处理
+        async function updateemp(id) {
+            //
+            // 依据id发送ajax获取请求 雇员信息 job name ...
+            var url = "http://localhost:8080/web-demo/find?id=" + id;
+            // 将雇员信息job name 赋值对话框
+            const result = await axios.get(url);
+            console.log(result);
+            // <id='job'> innerHTML</id>
+            job.innerHTML = result.data.job;
+            uname.innerHTML = result.data.name;
+            salary.value = result.data.salary;
+            eid.value = result.data.id;
+            // 将更新输入对话框显示
+            inputDiglog.style.display = "block";
+            // alert(id);
+        }
+        // 创建一个函数完成更新
+        async function ok() {
+            // 获取参数 id salary
+            var id = eid.value;
+            var salary = salary.value;
+            // 创建变量保存 url
+            var url = "http://localhost:8080/web-demo/update";
+            // 发送post请求
+            var data = {id: id, salary: salary};
+            const result = await axios.post(url, data);
+            // 隐藏对话框
+            inputDiglog.style.display = "none";
+            // 调用方法刷新
+            getlist();
+        }
+        // 创建一个函数完成取消
+        function cancel(){
+            inputDiglog.style.display = "none";
+        }
+    </script>
+</body>
+</html>

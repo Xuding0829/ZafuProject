@@ -1,0 +1,14 @@
+const formData = new FormData();
+formData.append('image', imageFile); // imageFile是选中的文件
+
+axios.post('/uploadImage', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
+.then(response => {
+  // 处理响应
+})
+.catch(error => {
+  // 处理错误
+});

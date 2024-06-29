@@ -90,12 +90,78 @@ public class EmpService {
         return Empps;
     }
 
+    public void remove(int id) throws Exception {
+        // 创建连接对象
+        Connection conn = DBUtils.getConnection();
+        // 创建sql语句
+        String sql = "delete from t_emp where id = " + id;
+        // 创建stmt对象
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        // 绑定参数
+        stmt.setInt(1, id);
+        // 执行
+        stmt.executeUpdate();
+        conn.close();
+        stmt.close();
+    }
+
+    public Empp find(int id) throws Exception {
+        // 创建连接对象
+        Connection conn = DBUtils.getConnection();
+        // 创建sql语句
+        String sql = "select * from t_emp where id = " + id;
+        // 创建stmt对象
+        Statement stmt = conn.createStatement();
+        // 执行stmt对象并获取结果
+        ResultSet rs = stmt.executeQuery(sql);
+
+        Empp empp = null;
+        // 创建循环 遍历集合resultset
+        if(rs.next()) {
+            // 从数据库中创建空对象
+            empp = new Empp();
+            // 从数据库中获取对象
+            id = rs.getInt("id");
+            String name = rs.getString("name");
+            String job = rs.getString("job");
+            String salary = rs.getString("salary");
+            empp.setId(id);
+            empp.setName(name);
+            empp.setJob(job);
+            empp.setSalary(salary);
+        }
+        // 在循环外返回集合对象
+        rs.close();
+        conn.close();
+        stmt.close();
+        return empp;
+    }
+
+    public boolean update(int id, String salary) throws Exception {
+        // 创建连接对象
+        Connection conn = DBUtils.getConnection();
+        // 创建sql语句
+        String sql = "update t_emp set salary = ? where id = ?";
+        // 创建stmt对象
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        // 绑定参数
+        stmt.setString(1, salary);
+        stmt.setInt(2, id);
+        // 执行
+        stmt.executeUpdate();
+//        conn.close();
+//        stmt.close();
+        return true;
+    }
+
     public static void main(String[] args) throws Exception {
-//       boolean rs = new EmpService().register("admin", "manager", "19000","123");
-//       System.out.println(rs);
-//       boolean rs = new EmpService().login("admin","123");
-//       System.out.println(rs);
-        List<Empp> Empps = new EmpService().list();
-        System.out.println(Empps);
+//      boolean rs = new EmpService().register("admin", "manager", "19000","123");
+//      System.out.println(rs);
+//      boolean rs = new EmpService().login("admin","123");
+//      System.out.println(rs);
+//      List<Empp> Empps = new EmpService().list();
+//      System.out.println(Empps);
+        boolean rs = new EmpService().update(2, "1234567");
+        System.out.println(new EmpService().find(2));
     }
 }
