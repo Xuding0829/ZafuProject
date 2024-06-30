@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="/web-demo/demo5" method="post">
+    <input name="username"><input type="submit">
+</form>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+
+    axios.get('http://localhost:8080/web-demo/demo22').then(res=>{
+     console.log(res)
+ }).catch(err=>{
+     console.log(err)
+ })
+    axios.get('http://localhost:8080/web-demo/demo23?param1=111').then(res=>{
+     console.log(res)
+ }).catch(err=>{
+     console.log(err)
+ })
+
+
+let params = new URLSearchParams();
+params.append('param1', "为为");
+
+//let params = {'param1':'11212'}
+  axios.post('http://localhost:8080/web-demo/demo23',params).then(res=>{
+     console.log(res)
+ }).catch(err=>{
+     console.log(err)
+ })
+
+
+</script>
+</body>
+</html>

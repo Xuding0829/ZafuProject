@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     <h4>第一种上传文件方式--表单</h4>
+     <form method="post"  enctype="multipart/form-data"
+       action="http://localhost:8080/web-demo/upload2">
+         <!--第一项:预览图片标签-->
+         <img src="2.jpg" style="width:200px;height:200px"
+              id="prevView"/>
+         <!--第二项:选择图片标签-->
+         <input type="file" name="pic"
+                onchange="prev(this)"/>
+         <!--第三项:文件名标签-->
+         <input type="text" name="name"/>
+         <!--第四项:提交-->
+         <input type="submit" value="上传"/>
+     </form>
+     <script>
+         //图片预览
+         function prev(even){
+           //1:获取预览标签
+           var pic = document.getElementById("prevView")
+           //2:获取上传图片
+           var file = even.files[0];
+           //3:读取文件
+           var reader = new FileReader();
+           reader.readAsDataURL(file);
+           //4:等待文件读取完成{回调函数} 图片读取完成
+           reader.onload = function(){
+             //4.1:直接赋值
+             pic.setAttribute("src",this.result);
+           }
+
+         }
+     </script>
+</body>
+</html>

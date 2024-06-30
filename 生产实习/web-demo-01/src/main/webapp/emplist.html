@@ -8,8 +8,6 @@
     </style>
 </head>
 <body>
-    <style>
-    </style>
     <table style = "width:80%;" border="1">
         <thead>
             <tr>
@@ -54,7 +52,8 @@
     </div>
     <!--创建更新用户窗口 end-->
     <!--下载并安装aioxs库 小哥上岗-->
-    <script src = "https://unpkg.com/axios/dist/axios.min.js"> </script>
+    <script src = "https://unpkg.com/axios/dist/axios.min.js">
+    </script>
     <script>
         // 重写script
         // 下单->小哥跑商家->取餐->送回来
@@ -130,11 +129,14 @@
         async function ok() {
             // 获取参数 id salary
             var id = eid.value;
-            var salary = salary.value;
+            var salary2 = salary.value;
             // 创建变量保存 url
             var url = "http://localhost:8080/web-demo/update";
             // 发送post请求
-            var data = {id: id, salary: salary};
+            // var data = {id: id, salary: salary2};
+            var data = new URLSearchParams();
+            data.append('id', id);
+            data.append('salary', salary2);
             const result = await axios.post(url, data);
             // 隐藏对话框
             inputDiglog.style.display = "none";

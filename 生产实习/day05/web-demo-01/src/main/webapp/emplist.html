@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+    </style>
+</head>
+<body>
+   <table style="width:80%;" border="1">
+       <thead>
+       <tr>
+           <td>编码</td>
+           <td>姓名</td>
+           <td>薪水</td>
+           <td>操作</td>
+       </tr>
+       </thead>
+       <tbody id="data">
+
+       </tbody>
+   </table>
+   <!--创建更新用户窗口 start-->
+   <style>
+       #inputDiglog{
+         padding:15px 25px;
+         width:205px;
+         height:210px;
+         background-color:#f1f1f1;
+         border:1px solid #f0f0f0;
+         box-shadow:10px 10px 5px #888888;
+         display:none;/*隐藏*/
+       }
+       #inputDiglog li{
+         margin-top:12px;
+         font-size:12px;
+       }
+   </style>
+   <div id="inputDiglog">
+       <h3 style="text-align:center;">雇员信息</h3>
+       <ul style="list-style:none;">
+           <li>用户名:<span id="uname">东东</span></li>
+           <li>职务:<span id="job">manager</span></li>
+           <li>薪水:<input type="text" id="salary" /></li>
+           <li>
+               <a href="#" onclick="ok()">确定</a>
+               <a href="#" onclick="cancel()">取消</a>
+           </li>
+           <li>
+               <input type="hidden" id="eid" />
+           </li>
+       </ul>
+   </div>
+   <!--创建更新用户窗口 end-->
+   <!--下载并且安装aioxs库  小哥上岗-->
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   <script>
+      //一定要重新写<script>
+      //下单->小哥跑商家->取餐->送回来   axios
+      //1:创建函数获取菜单
+    async function getList(){
+        //1.1:创建变量保存餐厅和服务器地址
+        var url = "http://localhost:8080/web-demo/list"
+        //1.2:发送请求
+        const result = await axios.get(url);
+        //1.3:获取数据
+        //console.log(result)
+        //1.4:依据数据拼字符串赋值data结束
+        var str = "";
+        for(var i=0;i<result.data.length;i++){
+            var item = result.data[i];
+            str += `
+            <tr>
+              <td>${item.id}</td>
+              <td>${item.name}</td>
+              <td>${item.salary}</td>
+              <td>
+                 <a href="#" onclick="delemp(${item.id})">DELETE</a>
+                 <a href="#" onclick="updateemp(${item.id})">UPDATE</>
+                 <a href="#" >Find</a>
+              </td>
+            </tr>
+            `
+            data.innerHTML = str;
+        }
+      }
+      //2:立即出发
+      getList();
+   </script>
+   <script>
+       //删除指定用户，并且刷新网页数据
+       async function delemp(id){
+         //1:显示二次确认窗口
+         var rs = confirm("是否删除数据?");
+         //2:判断用户是否点击 是 true
+         if(rs===false)return;
+         //3:发送ajax请求 (删除 )
+         var url = "http://localhost:8080/web-demo/remove";
+         url += "?id="+id
+         const result = await axios.get(url);
+         //4:局部刷新网页
+         getList();
+
+       }
+   </script>
+   <script>
+       //创建一个函数完成更新前[预处理]
+   async  function updateemp(id){
+         //1:
+         //2:依据id发送ajax请求获取 雇员信息 job name ...
+         var url = "http://localhost:8080/web-demo/find?id="+id;
+         //3:将雇员信息 job name ..赋值对话框
+         const result = await axios.get(url);
+         console.log(result);
+         //<span id="job"></span>
+         job.innerHTML = result.data.job;
+         uname.innerHTML = result.data.name;
+         salary.value = result.data.salary;
+         eid.value = result.data.id;
+         //4:将更新输入对话框显示
+         inputDiglog.style.display = "block";
+       }
+       //创建一个函数完成    [更新]
+      async  function ok(){
+           //1:获取参数 id salary
+           var id = eid.value
+           var salary2 =  salary.value  //新薪水
+           //2:创建变量保存 url
+           var url = "http://localhost:8080/web-demo/update";
+           //3:发送post请求
+           //var data = {id:id,salary:salary2}
+           var data = new URLSearchParams();
+           data.append('id',id)
+           data.append('salary',salary2)
+           const result = await axios.post(url,data);
+           //4:隐藏对话框
+           inputDiglog.style.display = "none";
+           //5:调用方法刷新
+           getList()
+       }
+       //创建一个函数完成取消
+       function cancel(){
+         inputDiglog.style.display = "none";
+       }
+   </script>
+</body>
+</html>

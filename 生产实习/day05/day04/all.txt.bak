@@ -1,0 +1,320 @@
+今天学习的内容
+1:简介实训项目
+  1.1:项目内容[java web-员工管理] 
+  java;jdbc;servlet;html;css
+2:项目开发流程
+  mysql数据(创建表;添加数据;更新数据;删除数据)
+  jdbc
+  servlet
+  html
+  css
+3:作业提交(分组 ppt;代码)
+
+4.1:创建数据库
+#utf8国际标准码支持全世界所有国家和地区文字
+create database emp charset=utf8;
+#进入库
+use emp;
+#
+create table t_emp(
+ id int primary key auto_increment,
+ name varchar(25),
+ salary decimal(10,2),
+ job  varchar(25)
+);
+    
+##重点知识######
+-货币类型通 decimal高精度浮点数
+-更高要求   int    单位分
+例示: 存储10元钱   实际1000分
+
+
+
+4.2:jdbc连接操作数据库 maven
+ 1:下载安装jdbc与mysql驱动程序(java与mysql软件)
+ 2:创建项目 maven 下载安装软件包
+  2.1:在pom.xml指定需要下载软件包 5.1.47
+      mysql-connector-java
+  2.2:点击刷新按钮立即下载
+ 3:项目中大量操作数据库(频繁创建数据库连接)
+  -小项目中需要工具DBUtils.java 处理数据库连接
+  1:类工具类DBUtils.java DBTools.java
+    1.1:加载mysql驱动程序
+    Class.forName('com.mysql.jdbc.Driver')
+    1.2:创建数据库连接  
+    DriverManager.getConnection('jdbc:mysql://127.0.0.1:3306/emp
+    ','root','123456');
+    1.3:获取连接
+   2:常见错误
+    ##################知识点忘了没关系##出错秒调###
+    2.1:com.mysql.jdbc.Driver 加载失败(少见)
+    原因:mysql驱动程序maven没有下载成功
+    解决:pom.xml检验下载(刷新)
+    2.2:密码不正确
+    Access denied for user 'root'
+    原因:mysql密码指定错误
+    2.3:数据表不存在
+    原因:Table 'emp.emp' doesn't exist
+    解决:检查表名称改正确
+    2.4:url参数不正确
+     Establishing SSL connection
+    原因:mysql版本太高了
+    解决:添加url参数
+    原先: "jdbc:mysql://localhost:3306/emp";
+    新:   "jdbc:mysql://localhost:3306/emp?useSSL=true";
+    2.5:如何调前端错误
+    
+
+########第二天内容##################
+1:复习昨天重点
+2:表单处理(一组小技巧)
+3:正则表达式(重点)!!!
+4:servlet
+---
+1:复习昨天重点
+##重点知识######
+-货币类型通 decimal高精度浮点数
+-更高要求   int    单位分
+例示: 存储10元钱   实际1000分
+    2.1:com.mysql.jdbc.Driver 加载失败(少见)
+    原因:mysql驱动程序maven没有下载成功
+    解决:pom.xml检验下载(刷新)
+    2.2:密码不正确
+    Access denied for user 'root'
+    原因:mysql密码指定错误
+    2.3:数据表不存在
+    原因:Table 'emp.emp' doesn't exist
+    解决:检查表名称改正确
+    2.4:url参数不正确
+     Establishing SSL connection
+    原因:mysql版本太高了
+    解决:添加url参数
+    原先: "jdbc:mysql://localhost:3306/emp";
+    新:   "jdbc:mysql://localhost:3306/emp?useSSL=true";
+    2.5:如何调前端错误
+2:表单处理(一组小技巧)
+  -输入框
+   --给输入框起名字
+   --name给java程序准备
+   --id给javascript程序准备
+   --技巧:id与name最好一样
+   --事件:(操作.你用鼠标;键盘操作)
+     鼠标:onclick点击
+     键盘:onkeydown按下onkeyup抬起
+          onblur(失去焦点)
+	  闪烁光标
+  <input type="text" name="uname" id="uname"/>
+3:正则表达式(重点)
+  正则表达式小技巧:支持任何语言
+  javascript;java;python;c++;...
+  作用:验证[搜索;替换]字符串是否正确;
+  要求:用户名验证要求
+       -长度 3~14
+       -字母[大写;小写]
+       -数字
+  正则表达式:一组特殊字符:指定验证规则
+  (1)要求一:全数字      [0-9]
+  (2)要求二:全小写字母  [a-z]
+  (3)要求三:全大写字母  [A-Z]
+  (4)要求四:以上全包括  [0-9a-zA-Z]
+  (5)要求五:全数字4位   [0-9]{4}
+  (6)要求六:全数字4到6位[0-9]{4,6}
+  语法示例:检测短信验证码 4位数字
+  var sms = "87690";
+  var reg = /^[0-9]{4}$/
+  if(reg.test(sms) == false){
+     alert("你的短信验证码不正确")
+  }
+  
+  练习:8:57 完成任务
+  1:创建正则表达式 学生年龄 /^[0-9]{1,2}$/
+  2:创建正则表达式 手机号   /^1[3-9][0-9]{9}$/
+  3:创建正则表达式 邮箱
+    /^[0-9a-zA-Z_]{1,20}@[0-9a-zA-Z.]{1,}$/ 
+    111@163.com
+  4:创建正则表达式 真实姓名,中文范围
+    [\u4e00-\u9fa5]{2,20}
+  
+  
+4:servlet
+  -需要tomcat支持
+  -jvm-bind  端口被占用
+
+###################
+#雇员管理
+1:常用工具类;html保存项目
+DBUtils.java
+reg.html
+
+####程序常见错误####
+##jvm 端品被占用  bind error
+##原因:你电脑有一个程序占用8080端口
+       我们tomcat工作也需要8080 冲突
+  解决:将你电脑中8080程序退出
+  1:win + r -> cmd ->   输入命令 netstat -ano
+    #查看8080被哪个程序占用
+     TCP    0.0.0.0:8080           0.0.0.0:0
+     LISTENING       252
+    #查看252程序占用8080
+  2:任务管理员找252结束
+    pid = 252 结束任务
+
+
+#用户登录--完成任务所需程序
+1:mysql表示t_emp表
+  1.1:向t_emp表添加一列
+  alter table t_emp add pwd varchar(25);
+  update t_emp set pwd='123'
+2:jdbc DBUtils.java 连接数据库
+3:小工
+4:servlet(服务员+大厅经理)
+  1:接收参数 name pwd
+  2:打开数据创建连接    -->小工 EmpService完成登录
+  3:创建sql命令         -->小工
+  SELECT COUNT(id) as c from t_emp  where name='tom' and pwd='123';
+  4:创建statement对象   -->小工
+  5:执行查询            -->小工
+  6:获取结果并且判断
+  7:将结果返回  登录成功
+                登录失败
+#用户登录--完成任务流程
+
+
+###########第三天#############
+1:复习昨天重点
+2:用户登录注册添加查询
+------
+1:复习昨天重点
+  正则表达式
+  用户登录流程
+2:用户注册添加查询
+  2.1:什么是用户注册
+   简单功能:向数据库表t_emp添加一条数据
+  2.2:参与程序
+   mysql t_emp      己经有
+   DBUtils.java     己经有
+   EmpService  reg
+   Empreg.java  servlet
+   reg.html         己经有
+  2.3:小问题中乱码(??)
+   原因:程序各个部分编码不一统
+   mysql    程序一  utf-8
+   servlet  程序二  iso-8859-1 
+   html     程序三  utf-8
+   解决:
+   1:添加指令(在所有输出程序之前)
+   resp.setContentType("text/html;charset=utf-8");
+   
+   
+3:当用户查询所有雇员列表
+  3.1:查询列表 t_emp 直接查询显示网页
+  3.2:参数程序
+      -t_emp
+      -DBUtils.java
+      -EmpService.java     查询结果
+      -EmpListServlet.java 显示结果
+      
+      
+#########第四天###########
+1:复习昨天重点
+  1:用户注册  向数据库添加一条记录
+    "添加成功" ==> ????
+    1:添加指令(在所有输出程序之前)
+    resp.setContentType("text/html;charset=utf-8");   
+  2:用户查询
+    从数据库查找所有数据 t_emp
+    
+    
+2:今天内容
+  2.1:解决昨天几个问题
+   ?注册用户中文乱码  数据保存数据库乱(更新)
+   ?文件上传()
+   ?serlvet 简单/完善
+
+  2.2:ajax/json
+  1:json 在程序中常见需要传递[数据]
+    htmlform->  name:tom pwd:123   ->servlet
+    serlvet->   添加成功 添加失败
+    serlvet->   name:tom name:jerry job....
+  2:常见数据格式
+    txt  少量    "添加成功"
+    xml  大量(早期 10年前)
+    <emps>
+      <emp>
+         <id>2</id>
+	 <name>jerry</name>
+	 <salary>110000</salary>
+      </emp>
+      <emp>
+         <id>3</id>
+	 <name>tom</name>
+	 <salary>210000</salary>
+      </emp>
+      ..
+    </emps>
+    json
+      对象  {"name":"tom","salary":11000}
+      数组
+      [
+       {"name":"tom","salary":11000},
+       {"name":"jerry","salary":11000},
+       {"name":"kk","salary":11000}
+      ]
+    yaml
+      name:"tom"
+       - salary:10000
+       - salary:20000
+   ajax[餐厅]    
+  2.3:项目完成
+   ?用户查询[]/分页
+     1:将用户查询数据转换json
+       1.1:配置下载库fastjson(阿里)
+       1.2:直接调用将数据转json
+       
+       三步:
+       1:将数据List转换json字符串
+       String json = JSON.toJSONString(items);
+       2:指定发送数据json格式
+       resp.setContentType("text/json;charset=utf-8");
+       3:发送
+       resp.getWriter().write(json);
+       
+     2:创建网页emplist.html显示用户显示
+     3:加载ajax(技术)库axios(实现技术软件)
+    // 支持async/await用法
+    async function getUser() {
+     var url = "http://localhost:8080/web-demo/list";
+       const response = await axios.get(url);
+      }       
+     4:当网页显示成功后立即发送ajax(小哥)请求
+       获取用户显示并显示
+   ?用户删除
+    概念:什么是删除(将数据移除)
+    -真实删数据(不可恢复)
+     delete from t_emp where id = ?
+    -伪删数据
+     t_emp
+     id name salary job       isdel
+     1  tom  10000  manager   1
+    -EmpService
+    -EmpDelServlet
+    -emplist.html(!!!)
+    #删除特殊操作,必须二次确认
+    -刷新网页
+     location.reload(true); 强制刷新网页
+    -ajax局部刷新(网页稳定,用户感受好)
+    
+   ?用户更新
+    --查询指定用户信息
+      select * from t_emp where id = ?
+    --现更新
+      update t_emp set salary = ? where id = ?
+    -EmpService
+       find
+       update
+    -EmpFindServlet      get方法  get方法
+    -EmpUpdateServlet    post方法 post方法
+    -emplist.html(!!!)
+   ?分页 
+   ?用户上传头像
+   ?检查用户是否存在

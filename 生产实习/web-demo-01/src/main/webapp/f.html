@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 指定了base标签 -->
+    <style type="text/css">
+        input[type="submit"] {
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #31B0D5;
+            border: none;
+            width: 70px;
+            height: 35px;
+            font-size: 20px;
+        }
+
+        img {
+            border-radius: 50%;
+        }
+
+        form {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 200px;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function prev(event) {
+            //获取展示图片的区域
+            var img = document.getElementById("prevView");
+            //获取文件对象
+            var file = event.files[0];
+            //获取文件阅读器： Js的一个类，直接使用即可
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                //给img的src设置图片url
+                img.setAttribute("src", this.result);
+            }
+        }
+    </script>
+
+</head>
+<body>
+<!-- 表单的enctype属性要设置为multipart/form-data
+    enctype="multipart/form-data" 表示提交的数据是多个部分构造，有文件和文本
+ -->
+
+<form action="http://localhost:8080/web-demo/upload2" method="post" enctype="multipart/form-data">
+    <!--预览图片的标签-->
+    <img src = "1.png" style="width:200px;height:200px" id="prevView"/>
+    <!--选择图片标签-->
+    <input type="file" name="pic" id="" value="" onchange="prev(this)" multiple/>
+    <!--文件名标签-->
+    <input type="text" name="name">
+    <!--提交-->
+    <input type="button" value="上传"onclick="fnupload()"/>
+    <script>
+        async function fnupload() {
+            // 获取上传文件
+            var file = pic.files[0];
+            // 创建按form表单对象
+            var formData = new FormData();
+            // 文件对象名称, 文件对象, 源文件名
+            formData.append("uploadFile", file, file.name);
+            // 指定打碎文件参数
+            const config = {
+                headers: {"Content-Type": "multipar/form-data;boundary=" + new Data().getTime()}
+            };
+            // 发送post请求
+            var url = "http://localhost:8080/web-demo/upload2";
+            const result = await axios.post(url.formData, config);
+            console.log(result);
+        }
+
+    </script>
+</form>
+</body>
+</html>

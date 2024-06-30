@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>上传文件--第二种风格ajax</h3>
+    <input type="file" name="pic" id="pic"/>
+    <input type="button" value="上传" onclick="fnupload()"/>
+    <!--下载安装axios库-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //通过axios进行上传文件
+      async  function fnupload(){
+          //1:获取上传文件
+          var file = pic.files[0];
+          //2:创建form表单对象
+          var formData = new FormData();
+          //文件对象名称  文件对象  源文件名
+          formData.append("uploadFile",file,file.name)
+          //3:指定打碎图片参数
+           const config = {
+            headers: { "Content-Type":
+             "multipart/form-data;boundary="+
+             new Date().getTime()}
+           };
+          //4:发送post请求
+          var url = "http://localhost:8080/web-demo/upload2";
+          const result = await axios.post(url,formData,config)
+          console.log(result);
+
+
+        }
+    </script>
+</body>
+</html>
