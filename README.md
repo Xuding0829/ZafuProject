@@ -1,3 +1,5 @@
+
+
 # 60Gogo
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
@@ -33,7 +35,7 @@
 git clone https://github.com/Xuding0829/60Gogo.git
 ```
 
-2. 根据需要复习的课程，选择相应的文件夹。
+2. 根据需要复习的课程，进入相应的文件夹。
 
 # 贡献
 
@@ -66,7 +68,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" size="13px" colspan="7">
         <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
-          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+          <a href="https://allcontributors.js.org/docs/en/bot/usage">Add your contributions</a>
         </img>
       </td>
     </tr>
